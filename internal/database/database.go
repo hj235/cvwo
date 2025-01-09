@@ -15,8 +15,8 @@ type Database struct {
 
 func InitialiseDB() *sql.DB {
 	// Verify DSN
-	pwd := os.Getenv("MYSQL_PWD")
-	db, err := sql.Open("mysql", "root:"+pwd+"@tcp(localhost:3306)/webforum")
+	dsn := os.Getenv("MYSQL_DSN")
+	db, err := sql.Open("mysql", dsn)
 	if err != nil {
 		fmt.Println("An error has occurred with the data source name.\nOpening a driver will typically not attempt to connect to the database.")
 		log.Fatal(err)
