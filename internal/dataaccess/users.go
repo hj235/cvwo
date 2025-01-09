@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/CVWO/sample-go-app/internal/database"
-	"github.com/CVWO/sample-go-app/internal/models"
+	"github.com/hj235/go-app/internal/database"
+	"github.com/hj235/go-app/internal/models"
 )
 
 func List(db *database.Database) ([]models.User, error) {

@@ -4,8 +4,8 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/CVWO/sample-go-app/internal/handlers/users"
 	"github.com/go-chi/chi/v5"
+	"github.com/hj235/go-app/internal/handlers/users"
 )
 
 func GetRoutes() func(r chi.Router) {
