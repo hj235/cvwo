@@ -10,10 +10,11 @@ import (
 )
 
 type Database struct {
-	db *sql.DB
+	Database *sql.DB
 }
 
 func InitialiseDB() *sql.DB {
+	// Verify DSN
 	dsn := os.Getenv("MYSQL_DSN")
 	db, err := sql.Open("mysql", dsn)
 	if err != nil {
@@ -21,6 +22,7 @@ func InitialiseDB() *sql.DB {
 		log.Fatal(err)
 	}
 
+	// Verify Database connection
 	err = db.Ping()
 	if err != nil {
 		fmt.Println("An error has occurred connecting to the database with the given DSN.")
@@ -35,6 +37,10 @@ func InitialiseDB() *sql.DB {
 var DBInstance Database = Database{InitialiseDB()}
 
 func GetDB() (*Database, error) {
-
+	// Verify Database connection
+	err := DBInstance.Database.Ping()
+	if err != nil {
+		return nil, err
+	}
 	return &DBInstance, nil
 }
