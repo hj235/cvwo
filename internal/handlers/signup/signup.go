@@ -7,6 +7,7 @@ import (
 
 	"github.com/hj235/go-app/internal/api"
 	signupPkg "github.com/hj235/go-app/internal/dataaccess/signup"
+	"github.com/hj235/go-app/internal/models"
 	"github.com/pkg/errors"
 )
 
@@ -15,6 +16,7 @@ const (
 	NameKey = "name"
 
 	SuccessfulSignupMessage = "Successfully signed up"
+	ErrParseForm            = "Failed to parse signup form in %s"
 	ErrRetrieveDatabase     = "Failed to retrieve database in %s"
 	ErrRetrieveUsers        = "Failed to retrieve users in %s"
 	ErrEncodeView           = "Failed to retrieve users in %s"
@@ -28,10 +30,15 @@ func HandleSignup(w http.ResponseWriter, r *http.Request) (*api.Response, error)
 	// 	return nil, errors.Wrap(err, fmt.Sprintf(ErrRetrieveDatabase, Signup))
 	// }
 
-	r.ParseForm()
-	name := r.PostForm.Get(NameKey)
+	user := models.User{}
+	err := json.NewDecoder(r.Body).Decode(&user)
 
-	user, err := signupPkg.Signup(name)
+	if err != nil {
+		return nil, errors.Wrap(err, fmt.Sprintf(ErrParseForm, Signup))
+	}
+	defer r.Body.Close()
+
+	err = signupPkg.Signup(&user)
 	if err != nil {
 		return nil, errors.Wrap(err, fmt.Sprintf(ErrRetrieveUsers, Signup))
 	}

@@ -6,3 +6,5 @@
 # Editor
 .idea/*
 .vscode/*
+
+/test
