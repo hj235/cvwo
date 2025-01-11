@@ -7,7 +7,6 @@ import (
 
 	"github.com/hj235/go-app/internal/api"
 	usersPkg "github.com/hj235/go-app/internal/dataaccess/users"
-	"github.com/hj235/go-app/internal/database"
 	"github.com/pkg/errors"
 )
 
@@ -21,13 +20,7 @@ const (
 )
 
 func HandleList(w http.ResponseWriter, r *http.Request) (*api.Response, error) {
-	db, err := database.GetDB()
-
-	if err != nil {
-		return nil, errors.Wrap(err, fmt.Sprintf(ErrRetrieveDatabase, ListUsers))
-	}
-
-	users, err := usersPkg.ListAll(db)
+	users, err := usersPkg.ListAll()
 	if err != nil {
 		return nil, errors.Wrap(err, fmt.Sprintf(ErrRetrieveUsers, ListUsers))
 	}

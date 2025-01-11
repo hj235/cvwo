@@ -9,7 +9,7 @@ import (
 	"github.com/hj235/go-app/internal/models"
 )
 
-func ListAll(db *database.Database) ([]models.User, error) {
+func ListAll() ([]models.User, error) {
 	db, err := database.GetDB()
 	if err != nil {
 		fmt.Println("Failed to reach database.")
@@ -19,6 +19,9 @@ func ListAll(db *database.Database) ([]models.User, error) {
 	query := "SELECT * FROM webforum.users"
 
 	rows, err := db.Database.Query(query)
+	if err != nil {
+		log.Fatal(err)
+	}
 	var users []models.User
 
 	for rows.Next() {
@@ -40,10 +43,13 @@ func List(name string) (*models.User, error) {
 	query := "SELECT * FROM webforum.users WHERE name=?"
 
 	rows, err := db.Database.Query(query, name)
+	if err != nil {
+		log.Fatal(err)
+	}
 	var user models.User
 
 	if !rows.Next() {
-		return nil, errors.New("No user with the indicated name was found")
+		return nil, errors.New("no user with the indicated name was found")
 	}
 
 	rows.Scan()

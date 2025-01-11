@@ -3,7 +3,6 @@ package users
 import (
 	"errors"
 
-	"github.com/hj235/go-app/internal/dataaccess/users"
 	"github.com/hj235/go-app/internal/dataaccess/utils"
 	"github.com/hj235/go-app/internal/models"
 )
@@ -20,7 +19,7 @@ func Login(user *models.User) error {
 	}
 
 	// Retrieve user from database
-	retrievedUser, err := users.List(user.Name)
+	retrievedUser, err := List(user.Name)
 	if err != nil {
 		return err
 	}

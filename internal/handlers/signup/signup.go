@@ -6,7 +6,7 @@ import (
 	"net/http"
 
 	"github.com/hj235/go-app/internal/api"
-	useSignup "github.com/hj235/go-app/internal/dataaccess/signup"
+	usersPkg "github.com/hj235/go-app/internal/dataaccess/users"
 	"github.com/hj235/go-app/internal/models"
 	"github.com/pkg/errors"
 )
@@ -41,7 +41,7 @@ func HandleSignup(w http.ResponseWriter, r *http.Request) (*api.Response, error)
 	}
 	defer r.Body.Close()
 
-	err = useSignup.Signup(&user)
+	err = usersPkg.Signup(&user)
 	if err != nil {
 		errorMessage := fmt.Sprintf(ErrRetrieveUser, Signup)
 		response.Messages = []string{errorMessage}

@@ -6,7 +6,7 @@ import (
 	"net/http"
 
 	"github.com/hj235/go-app/internal/api"
-	useLogin "github.com/hj235/go-app/internal/dataaccess/login"
+	usersPkg "github.com/hj235/go-app/internal/dataaccess/users"
 	"github.com/hj235/go-app/internal/models"
 	"github.com/pkg/errors"
 )
@@ -41,7 +41,7 @@ func HandleLogin(w http.ResponseWriter, r *http.Request) (*api.Response, error) 
 	}
 	defer r.Body.Close()
 
-	err = useLogin.Login(&user)
+	err = usersPkg.Login(&user)
 	if err != nil {
 		errorMessage := fmt.Sprintf(ErrRetrieveUser, Login)
 		response.Messages = []string{errorMessage}
