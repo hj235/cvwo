@@ -1,4 +1,4 @@
-package signup
+package users
 
 import (
 	"encoding/json"
@@ -13,10 +13,10 @@ import (
 )
 
 const (
-	Signup = "signup.Signup"
+	Login = "login.Login"
 )
 
-func HandleSignup(w http.ResponseWriter, r *http.Request) (*api.Response, error) {
+func HandleLogin(w http.ResponseWriter, r *http.Request) (*api.Response, error) {
 	// REPLACE WITH DATABASE PING CHECK
 	// db, err := database.GetDB()
 
@@ -27,26 +27,26 @@ func HandleSignup(w http.ResponseWriter, r *http.Request) (*api.Response, error)
 	var response = api.Response{}
 	user := models.User{}
 	err := json.NewDecoder(r.Body).Decode(&user)
-
 	if err != nil {
-		errorMessage := fmt.Sprintf(msgsPkg.ErrParseForm, Signup)
+		errorMessage := fmt.Sprintf(msgsPkg.ErrParseForm, Login)
 		return &response, utils.PrepareErrorResponse(&response, err, errorMessage, 1)
 	}
 	defer r.Body.Close()
 
-	err = usersPkg.Signup(&user)
+	err = usersPkg.Login(&user)
 	if err != nil {
-		errorMessage := fmt.Sprintf(msgsPkg.ErrSignupFailure, Signup)
+		errorMessage := fmt.Sprintf(msgsPkg.ErrLoginFailure, Login)
 		return &response, utils.PrepareErrorResponse(&response, err, errorMessage, 1)
 	}
 
 	data, err := json.Marshal(user)
 	if err != nil {
-		errorMessage := fmt.Sprintf(msgsPkg.ErrEncodeView, Signup)
+		errorMessage := fmt.Sprintf(msgsPkg.ErrEncodeView, Login)
 		return &response, utils.PrepareErrorResponse(&response, err, errorMessage, 1)
 	}
 
 	response.Payload.Data = data
-	response.Messages = append(response.Messages, msgsPkg.SuccessfulSignupMessage)
+	response.Messages = append(response.Messages, msgsPkg.SuccessfulLoginMessage)
+
 	return &response, nil
 }
