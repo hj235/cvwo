@@ -1,6 +1,7 @@
 package users
 
 import (
+	"errors"
 	"fmt"
 	"log"
 
@@ -8,7 +9,7 @@ import (
 	"github.com/hj235/go-app/internal/models"
 )
 
-func List(db *database.Database) ([]models.User, error) {
+func ListAll(db *database.Database) ([]models.User, error) {
 	db, err := database.GetDB()
 	if err != nil {
 		fmt.Println("Failed to reach database.")
@@ -27,4 +28,26 @@ func List(db *database.Database) ([]models.User, error) {
 	}
 
 	return users, nil
+}
+
+func List(name string) (*models.User, error) {
+	db, err := database.GetDB()
+	if err != nil {
+		fmt.Println("Failed to reach database.")
+		log.Fatal(err)
+	}
+
+	query := "SELECT * FROM webforum.users WHERE name=?"
+
+	rows, err := db.Database.Query(query, name)
+	var user models.User
+
+	if !rows.Next() {
+		return nil, errors.New("No user with the indicated name was found")
+	}
+
+	rows.Scan()
+	rows.Scan(&user.ID, &user.Name, &user.Date)
+
+	return &user, nil
 }

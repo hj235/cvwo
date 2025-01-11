@@ -12,7 +12,6 @@ import (
 )
 
 func Signup(user *models.User) error {
-	// TODO: VALUE VERIFICATION, IMPLEMENTATION
 	// Value verification
 	if len(user.Name) <= 0 {
 		return errors.New("Name cannot be empty")
@@ -44,6 +43,7 @@ func Signup(user *models.User) error {
 		log.Fatal(err)
 	}
 
+	// Query database for newly created user
 	rows, err := db.Database.Query("SELECT * FROM webforum.users WHERE name=?", user.Name)
 	if err != nil {
 		log.Fatal(err)
