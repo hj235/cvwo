@@ -11,7 +11,7 @@ import (
 func List(db *database.Database) ([]models.User, error) {
 	db, err := database.GetDB()
 	if err != nil {
-		fmt.Println("Failed to ping database.")
+		fmt.Println("Failed to reach database.")
 		log.Fatal(err)
 	}
 
