@@ -7,33 +7,31 @@ import (
 
 	"github.com/hj235/go-app/internal/api"
 	usersPkg "github.com/hj235/go-app/internal/dataaccess/users"
-	"github.com/pkg/errors"
+	msgsPkg "github.com/hj235/go-app/internal/handlers/messages"
+	"github.com/hj235/go-app/internal/handlers/utils"
 )
 
 const (
 	ListUsers = "users.HandleList"
-
-	SuccessfulListUsersMessage = "Successfully listed users"
-	ErrRetrieveDatabase        = "Failed to retrieve database in %s"
-	ErrRetrieveUsers           = "Failed to retrieve users in %s"
-	ErrEncodeView              = "Failed to retrieve users in %s"
 )
 
 func HandleList(w http.ResponseWriter, r *http.Request) (*api.Response, error) {
+	var response = api.Response{}
+
 	users, err := usersPkg.ListAll()
 	if err != nil {
-		return nil, errors.Wrap(err, fmt.Sprintf(ErrRetrieveUsers, ListUsers))
+		errorMessage := fmt.Sprintf(msgsPkg.ErrRetrieveUsers, ListUsers)
+		return &response, utils.PrepareErrorResponse(&response, err, errorMessage, 1)
 	}
 
 	data, err := json.Marshal(users)
 	if err != nil {
-		return nil, errors.Wrap(err, fmt.Sprintf(ErrEncodeView, ListUsers))
+		errorMessage := fmt.Sprintf(msgsPkg.ErrEncodeView, ListUsers)
+		return &response, utils.PrepareErrorResponse(&response, err, errorMessage, 1)
 	}
 
-	return &api.Response{
-		Payload: api.Payload{
-			Data: data,
-		},
-		Messages: []string{SuccessfulListUsersMessage},
-	}, nil
+	response.Payload.Data = data
+	response.Messages = append(response.Messages, msgsPkg.SuccessfulListUsersMessage)
+
+	return &response, nil
 }

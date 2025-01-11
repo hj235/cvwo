@@ -7,18 +7,13 @@ import (
 
 	"github.com/hj235/go-app/internal/api"
 	usersPkg "github.com/hj235/go-app/internal/dataaccess/users"
+	msgsPkg "github.com/hj235/go-app/internal/handlers/messages"
+	"github.com/hj235/go-app/internal/handlers/utils"
 	"github.com/hj235/go-app/internal/models"
-	"github.com/pkg/errors"
 )
 
 const (
 	Signup = "signup.Signup"
-
-	SuccessfulSignupMessage = "Successfully signed up"
-	ErrParseForm            = "Failed to parse signup form in %s"
-	ErrRetrieveDatabase     = "Failed to retrieve database in %s"
-	ErrRetrieveUser         = "Failed to retrieve user in %s"
-	ErrEncodeView           = "Failed to retrieve user in %s"
 )
 
 func HandleSignup(w http.ResponseWriter, r *http.Request) (*api.Response, error) {
@@ -34,32 +29,24 @@ func HandleSignup(w http.ResponseWriter, r *http.Request) (*api.Response, error)
 	err := json.NewDecoder(r.Body).Decode(&user)
 
 	if err != nil {
-		errorMessage := fmt.Sprintf(ErrParseForm, Signup)
-		response.Messages = []string{errorMessage}
-		response.ErrorCode = 1
-		return &response, errors.Wrap(err, errorMessage)
+		errorMessage := fmt.Sprintf(msgsPkg.ErrParseForm, Signup)
+		return &response, utils.PrepareErrorResponse(&response, err, errorMessage, 1)
 	}
 	defer r.Body.Close()
 
 	err = usersPkg.Signup(&user)
 	if err != nil {
-		errorMessage := fmt.Sprintf(ErrRetrieveUser, Signup)
-		response.Messages = []string{errorMessage}
-		response.ErrorCode = 1
-		return &response, errors.Wrap(err, errorMessage)
+		errorMessage := fmt.Sprintf(msgsPkg.ErrRetrieveUser, Signup)
+		return &response, utils.PrepareErrorResponse(&response, err, errorMessage, 1)
 	}
 
 	data, err := json.Marshal(user)
 	if err != nil {
-		errorMessage := fmt.Sprintf(ErrEncodeView, Signup)
-		response.Messages = []string{errorMessage}
-		response.ErrorCode = 1
-		return &response, errors.Wrap(err, errorMessage)
+		errorMessage := fmt.Sprintf(msgsPkg.ErrEncodeView, Signup)
+		return &response, utils.PrepareErrorResponse(&response, err, errorMessage, 1)
 	}
 
-	response.Payload = api.Payload{
-		Data: data,
-	}
-	response.Messages = []string{SuccessfulSignupMessage}
+	response.Payload.Data = data
+	response.Messages = append(response.Messages, msgsPkg.SuccessfulSignupMessage)
 	return &response, nil
 }

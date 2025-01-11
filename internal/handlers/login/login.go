@@ -7,19 +7,13 @@ import (
 
 	"github.com/hj235/go-app/internal/api"
 	usersPkg "github.com/hj235/go-app/internal/dataaccess/users"
+	msgsPkg "github.com/hj235/go-app/internal/handlers/messages"
+	"github.com/hj235/go-app/internal/handlers/utils"
 	"github.com/hj235/go-app/internal/models"
-	"github.com/pkg/errors"
 )
 
 const (
-	Login   = "login.Login"
-	NameKey = "name"
-
-	SuccessfulLoginMessage = "Successfully logged in"
-	ErrParseForm           = "Failed to parse login form in %s"
-	ErrRetrieveDatabase    = "Failed to retrieve database in %s"
-	ErrRetrieveUser        = "Failed to retrieve user in %s"
-	ErrEncodeView          = "Failed to retrieve user in %s"
+	Login = "login.Login"
 )
 
 func HandleLogin(w http.ResponseWriter, r *http.Request) (*api.Response, error) {
@@ -34,33 +28,25 @@ func HandleLogin(w http.ResponseWriter, r *http.Request) (*api.Response, error) 
 	user := models.User{}
 	err := json.NewDecoder(r.Body).Decode(&user)
 	if err != nil {
-		errorMessage := fmt.Sprintf(ErrParseForm, Login)
-		response.Messages = []string{errorMessage}
-		response.ErrorCode = 1
-		return &response, errors.Wrap(err, errorMessage)
+		errorMessage := fmt.Sprintf(msgsPkg.ErrParseForm, Login)
+		return &response, utils.PrepareErrorResponse(&response, err, errorMessage, 1)
 	}
 	defer r.Body.Close()
 
 	err = usersPkg.Login(&user)
 	if err != nil {
-		errorMessage := fmt.Sprintf(ErrRetrieveUser, Login)
-		response.Messages = []string{errorMessage}
-		response.ErrorCode = 1
-		return &response, errors.Wrap(err, errorMessage)
+		errorMessage := fmt.Sprintf(msgsPkg.ErrRetrieveUser, Login)
+		return &response, utils.PrepareErrorResponse(&response, err, errorMessage, 1)
 	}
 
 	data, err := json.Marshal(user)
 	if err != nil {
-		errorMessage := fmt.Sprintf(ErrEncodeView, Login)
-		response.Messages = []string{errorMessage}
-		response.ErrorCode = 1
-		return &response, errors.Wrap(err, errorMessage)
+		errorMessage := fmt.Sprintf(msgsPkg.ErrEncodeView, Login)
+		return &response, utils.PrepareErrorResponse(&response, err, errorMessage, 1)
 	}
 
-	response.Payload = api.Payload{
-		Data: data,
-	}
-	response.Messages = []string{SuccessfulLoginMessage}
+	response.Payload.Data = data
+	response.Messages = append(response.Messages, msgsPkg.SuccessfulLoginMessage)
 
 	return &response, nil
 }
