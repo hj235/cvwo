@@ -36,7 +36,7 @@ func HandleSignup(w http.ResponseWriter, r *http.Request) (*api.Response, error)
 
 	err = usersPkg.Signup(&user)
 	if err != nil {
-		errorMessage := fmt.Sprintf(msgsPkg.ErrRetrieveUser, Signup)
+		errorMessage := fmt.Sprintf(msgsPkg.ErrSignupFailure, Signup)
 		return &response, utils.PrepareErrorResponse(&response, err, errorMessage, 1)
 	}
 

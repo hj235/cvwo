@@ -9,7 +9,10 @@ import (
 func PrepareErrorResponse(response *api.Response, err error,
 	errorMsg string, errorCode int) error {
 
-	response.Messages = []string{errorMsg}
+	wrappedError := errors.Wrap(err, errorMsg)
+
+	response.Messages = []string{wrappedError.Error()}
 	response.ErrorCode = errorCode
-	return errors.Wrap(err, errorMsg)
+
+	return wrappedError
 }

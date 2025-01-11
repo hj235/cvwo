@@ -35,7 +35,7 @@ func HandleLogin(w http.ResponseWriter, r *http.Request) (*api.Response, error) 
 
 	err = usersPkg.Login(&user)
 	if err != nil {
-		errorMessage := fmt.Sprintf(msgsPkg.ErrRetrieveUser, Login)
+		errorMessage := fmt.Sprintf(msgsPkg.ErrLoginFailure, Login)
 		return &response, utils.PrepareErrorResponse(&response, err, errorMessage, 1)
 	}
 

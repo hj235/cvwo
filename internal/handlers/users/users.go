@@ -15,7 +15,7 @@ const (
 	ListUsers = "users.HandleList"
 )
 
-func HandleList(w http.ResponseWriter, r *http.Request) (*api.Response, error) {
+func HandleListAll(w http.ResponseWriter, r *http.Request) (*api.Response, error) {
 	var response = api.Response{}
 
 	users, err := usersPkg.ListAll()
