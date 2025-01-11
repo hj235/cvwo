@@ -5,12 +5,12 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/CVWO/sample-go-app/internal/router"
+	"github.com/hj235/go-app/internal/router"
 )
 
 func main() {
 	r := router.Setup()
-	fmt.Print("Listening on port 8000 at http://localhost:8000!")
+	fmt.Println("Listening on port 8000 at http://localhost:8000!")
 
 	log.Fatalln(http.ListenAndServe(":8000", r))
 }

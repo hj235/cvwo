@@ -1,4 +1,4 @@
-module github.com/CVWO/sample-go-app
+module github.com/hj235/go-app
 
 go 1.18
 

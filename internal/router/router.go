@@ -1,8 +1,8 @@
 package router
 
 import (
-	"github.com/CVWO/sample-go-app/internal/routes"
 	"github.com/go-chi/chi/v5"
+	"github.com/hj235/go-app/internal/routes"
 )
 
 func Setup() chi.Router {
