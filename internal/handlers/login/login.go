@@ -1,4 +1,4 @@
-package signup
+package login
 
 import (
 	"encoding/json"
@@ -6,22 +6,23 @@ import (
 	"net/http"
 
 	"github.com/hj235/go-app/internal/api"
-	useSignup "github.com/hj235/go-app/internal/dataaccess/signup"
+	useLogin "github.com/hj235/go-app/internal/dataaccess/login"
 	"github.com/hj235/go-app/internal/models"
 	"github.com/pkg/errors"
 )
 
 const (
-	Signup = "signup.Signup"
+	Login   = "login.Login"
+	NameKey = "name"
 
-	SuccessfulSignupMessage = "Successfully signed up"
-	ErrParseForm            = "Failed to parse signup form in %s"
-	ErrRetrieveDatabase     = "Failed to retrieve database in %s"
-	ErrRetrieveUser         = "Failed to retrieve user in %s"
-	ErrEncodeView           = "Failed to retrieve user in %s"
+	SuccessfulLoginMessage = "Successfully logged in"
+	ErrParseForm           = "Failed to parse login form in %s"
+	ErrRetrieveDatabase    = "Failed to retrieve database in %s"
+	ErrRetrieveUser        = "Failed to retrieve user in %s"
+	ErrEncodeView          = "Failed to retrieve user in %s"
 )
 
-func HandleSignup(w http.ResponseWriter, r *http.Request) (*api.Response, error) {
+func HandleLogin(w http.ResponseWriter, r *http.Request) (*api.Response, error) {
 	// REPLACE WITH DATABASE PING CHECK
 	// db, err := database.GetDB()
 
@@ -32,18 +33,17 @@ func HandleSignup(w http.ResponseWriter, r *http.Request) (*api.Response, error)
 	var response = api.Response{}
 	user := models.User{}
 	err := json.NewDecoder(r.Body).Decode(&user)
-
 	if err != nil {
-		errorMessage := fmt.Sprintf(ErrParseForm, Signup)
+		errorMessage := fmt.Sprintf(ErrParseForm, Login)
 		response.Messages = []string{errorMessage}
 		response.ErrorCode = 1
 		return &response, errors.Wrap(err, errorMessage)
 	}
 	defer r.Body.Close()
 
-	err = useSignup.Signup(&user)
+	err = useLogin.Login(&user)
 	if err != nil {
-		errorMessage := fmt.Sprintf(ErrRetrieveUser, Signup)
+		errorMessage := fmt.Sprintf(ErrRetrieveUser, Login)
 		response.Messages = []string{errorMessage}
 		response.ErrorCode = 1
 		return &response, errors.Wrap(err, errorMessage)
@@ -51,7 +51,7 @@ func HandleSignup(w http.ResponseWriter, r *http.Request) (*api.Response, error)
 
 	data, err := json.Marshal(user)
 	if err != nil {
-		errorMessage := fmt.Sprintf(ErrEncodeView, Signup)
+		errorMessage := fmt.Sprintf(ErrEncodeView, Login)
 		response.Messages = []string{errorMessage}
 		response.ErrorCode = 1
 		return &response, errors.Wrap(err, errorMessage)
@@ -60,6 +60,7 @@ func HandleSignup(w http.ResponseWriter, r *http.Request) (*api.Response, error)
 	response.Payload = api.Payload{
 		Data: data,
 	}
-	response.Messages = []string{SuccessfulSignupMessage}
+	response.Messages = []string{SuccessfulLoginMessage}
+
 	return &response, nil
 }
