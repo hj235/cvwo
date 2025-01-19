@@ -9,11 +9,13 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 )
 
-type Database struct {
-	Database *sql.DB
-}
+// type Database struct {
+// 	Database *sql.DB
+// }
 
-func InitialiseDB() *sql.DB {
+var DBInstance *sql.DB
+
+func InitialiseDB() {
 	// Verify DSN
 	dsn := os.Getenv("MYSQL_DSN")
 	db, err := sql.Open("mysql", dsn)
@@ -31,16 +33,12 @@ func InitialiseDB() *sql.DB {
 
 	fmt.Println("Successfully connected to database.")
 
-	return db
+	DBInstance = db
 }
 
-var DBInstance Database = Database{InitialiseDB()}
-
-func GetDB() (*Database, error) {
-	// Verify Database connection
-	err := DBInstance.Database.Ping()
-	if err != nil {
-		return nil, err
+func GetDB() (*sql.DB, error) {
+	if DBInstance == nil {
+		InitialiseDB()
 	}
-	return &DBInstance, nil
+	return DBInstance, nil
 }

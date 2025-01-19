@@ -33,7 +33,7 @@ func Signup(user *models.User) error {
 
 	// Add to database
 	query := "INSERT INTO webforum.users(name, date_created) VALUES(?, ?)"
-	stmt, err := db.Database.Prepare(query)
+	stmt, err := db.Prepare(query)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -44,7 +44,7 @@ func Signup(user *models.User) error {
 	}
 
 	// Query database for newly created user
-	rows, err := db.Database.Query("SELECT * FROM webforum.users WHERE name=?", user.Name)
+	rows, err := db.Query("SELECT * FROM webforum.users WHERE name=?", user.Name)
 	if err != nil {
 		log.Fatal(err)
 	}

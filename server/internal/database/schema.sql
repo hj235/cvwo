@@ -1,0 +1,31 @@
+CREATE TABLE IF NOT EXISTS
+users (
+  username VARCHAR(255) PRIMARY KEY,
+  password VARCHAR(255) NOT NULL,
+  date_created DATE NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS
+threads (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  author VARCHAR(255) NOT NULL REFERENCES users (username) ON UPDATE CASCADE,
+  title VARCHAR(255) NOT NULL,
+  body TEXT,
+  date_created DATE NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS
+comments (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    author VARCHAR(255) NOT NULL REFERENCES users (username) ON UPDATE CASCADE,
+    thread_id INT NOT NULL REFERENCES threads (thread_id) ON UPDATE CASCADE,
+    body TEXT NOT NULL,
+    date_created DATE NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS
+tags (
+    thread_id INT NOT NULL REFERENCES threads (thread_id) ON UPDATE CASCADE,
+    body VARCHAR(45) NOT NULL,
+    PRIMARY KEY(thread_id, body)
+);

@@ -18,7 +18,7 @@ func ListAll() ([]models.User, error) {
 
 	query := "SELECT * FROM webforum.users"
 
-	rows, err := db.Database.Query(query)
+	rows, err := db.Query(query)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -42,7 +42,7 @@ func List(name string) (*models.User, error) {
 
 	query := "SELECT * FROM webforum.users WHERE name=?"
 
-	rows, err := db.Database.Query(query, name)
+	rows, err := db.Query(query, name)
 	if err != nil {
 		log.Fatal(err)
 	}
