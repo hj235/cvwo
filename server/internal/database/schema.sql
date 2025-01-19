@@ -16,7 +16,8 @@ threads (
   author VARCHAR(255) NOT NULL REFERENCES users (username) ON UPDATE CASCADE,
   title VARCHAR(255) NOT NULL,
   body TEXT,
-  date_created DATE NOT NULL
+  date_created DATE NOT NULL,
+  date_edited DATE
 );
 
 CREATE TABLE IF NOT EXISTS
@@ -25,7 +26,8 @@ comments (
     author VARCHAR(255) NOT NULL REFERENCES users (username) ON UPDATE CASCADE,
     thread_id INT NOT NULL REFERENCES threads (thread_id) ON UPDATE CASCADE,
     body TEXT NOT NULL,
-    date_created DATE NOT NULL
+    date_created DATE NOT NULL,
+    date_edited DATE
 );
 
 CREATE TABLE IF NOT EXISTS
