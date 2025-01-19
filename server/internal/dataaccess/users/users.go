@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/hj235/go-app/internal/database"
-	"github.com/hj235/go-app/internal/models"
+	"github.com/hj235/cvwo/internal/database"
+	"github.com/hj235/cvwo/internal/models"
 )
 
 func ListAll() ([]models.User, error) {

@@ -5,10 +5,10 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/hj235/go-app/internal/api"
-	usersPkg "github.com/hj235/go-app/internal/dataaccess/users"
-	msgsPkg "github.com/hj235/go-app/internal/handlers/messages"
-	"github.com/hj235/go-app/internal/handlers/utils"
+	"github.com/hj235/cvwo/internal/api"
+	usersPkg "github.com/hj235/cvwo/internal/dataaccess/users"
+	msgsPkg "github.com/hj235/cvwo/internal/handlers/messages"
+	"github.com/hj235/cvwo/internal/handlers/utils"
 )
 
 const (

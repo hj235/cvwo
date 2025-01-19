@@ -5,7 +5,7 @@ import (
 	"net/http"
 
 	"github.com/go-chi/chi/v5"
-	"github.com/hj235/go-app/internal/handlers/users"
+	"github.com/hj235/cvwo/internal/handlers/users"
 )
 
 func GetRoutes() func(r chi.Router) {

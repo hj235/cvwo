@@ -3,8 +3,8 @@ package users
 import (
 	"errors"
 
-	"github.com/hj235/go-app/internal/dataaccess/utils"
-	"github.com/hj235/go-app/internal/models"
+	"github.com/hj235/cvwo/internal/dataaccess/utils"
+	"github.com/hj235/cvwo/internal/models"
 )
 
 func Login(user *models.User) error {

@@ -9,10 +9,6 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 )
 
-// type Database struct {
-// 	Database *sql.DB
-// }
-
 var DBInstance *sql.DB
 
 func InitialiseDB() {

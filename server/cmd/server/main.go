@@ -5,7 +5,8 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/hj235/go-app/internal/router"
+	"github.com/hj235/cvwo/internal/database"
+	"github.com/hj235/cvwo/internal/router"
 	"github.com/joho/godotenv"
 )
 
@@ -16,6 +17,8 @@ func main() {
 		fmt.Println("Error loading .env file")
 		log.Fatal(err)
 	}
+
+	database.InitialiseDB()
 
 	r := router.Setup()
 	fmt.Println("Listening on port 8000 at http://localhost:8000!")

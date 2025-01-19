@@ -5,9 +5,9 @@ import (
 	"log"
 	"time"
 
-	"github.com/hj235/go-app/internal/dataaccess/utils"
-	"github.com/hj235/go-app/internal/database"
-	"github.com/hj235/go-app/internal/models"
+	"github.com/hj235/cvwo/internal/dataaccess/utils"
+	"github.com/hj235/cvwo/internal/database"
+	"github.com/hj235/cvwo/internal/models"
 	"github.com/pkg/errors"
 )
 

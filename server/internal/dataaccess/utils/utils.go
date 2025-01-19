@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/hj235/go-app/internal/database"
+	"github.com/hj235/cvwo/internal/database"
 )
 
 func UsernameExists(name string) bool {
