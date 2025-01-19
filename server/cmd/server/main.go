@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 
 	"github.com/hj235/cvwo/internal/database"
 	"github.com/hj235/cvwo/internal/router"
@@ -21,7 +22,7 @@ func main() {
 	database.InitialiseDB()
 
 	r := router.Setup()
-	fmt.Println("Listening on port 8000 at http://localhost:8000!")
 
+	fmt.Printf("Listening on port %s!\n)", os.Getenv("SERVER_PORT"))
 	log.Fatalln(http.ListenAndServe(":8000", r))
 }

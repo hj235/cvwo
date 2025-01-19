@@ -6,11 +6,12 @@ import (
 )
 
 func Setup() chi.Router {
-	r := chi.NewRouter()
-	setUpRoutes(r)
-	return r
+	router := chi.NewRouter()
+	setUpRoutes(router)
+	return router
 }
 
-func setUpRoutes(r chi.Router) {
-	r.Group(routes.GetRoutes())
+func setUpRoutes(router chi.Router) {
+	router.Group(routes.GetRoutes())
+	router.Route("/user", routes.GetUserRoutes())
 }
