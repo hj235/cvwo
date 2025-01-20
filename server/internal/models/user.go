@@ -3,15 +3,15 @@ package models
 import "fmt"
 
 const (
-	userIDKey   = "id"
-	userNameKey = "name"
-	userDateKey = "date_created"
+	UserNameKey     = "username"
+	UserPasswordKey = "password"
+	UserDateKey     = "date_created"
 )
 
 type User struct {
-	ID   int    `json:"id"`
-	Name string `json:"name"`
-	Date string `json:"date_created"`
+	Name     string `json:"username"`
+	Password string `json:"password"`
+	Date     string `json:"date_created"`
 }
 
 func (user *User) Greet() string {

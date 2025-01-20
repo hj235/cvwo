@@ -19,8 +19,8 @@ threads (
     ON DELETE SET NULL,
   title VARCHAR(255) NOT NULL,
   body TEXT,
-  date_created DATE NOT NULL,
-  date_edited DATE
+  time_created TIMESTAMP NOT NULL,
+  time_edited TIMESTAMP
 );
 
 CREATE TABLE IF NOT EXISTS
@@ -36,8 +36,8 @@ comments (
       ON UPDATE CASCADE
       ON DELETE CASCADE,
     body TEXT NOT NULL,
-    date_created DATE NOT NULL,
-    date_edited DATE
+    time_created TIMESTAMP NOT NULL,
+    time_edited TIMESTAMP
 );
 
 CREATE TABLE IF NOT EXISTS
