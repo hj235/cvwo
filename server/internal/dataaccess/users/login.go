@@ -7,23 +7,35 @@ import (
 	"github.com/hj235/cvwo/internal/models"
 )
 
-func Login(user *models.User) error {
+func Login(username string, password string) (*models.UserSensitive, error) {
 	// Value verification
-	if len(user.Name) <= 0 {
-		return errors.New("name cannot be empty")
+	if len(username) <= 0 {
+		return nil, errors.New("username cannot be empty")
+	}
+	if len(password) <= 0 {
+		return nil, errors.New("password cannot be empty")
 	}
 
 	// Verify that name exists
-	if !utils.UsernameExists(user.Name) {
-		return errors.New("username does not exist")
+	if !utils.UsernameExists(username) {
+		return nil, errors.New("username does not exist")
 	}
 
 	// Retrieve user from database
-	retrievedUser, err := List(user.Name)
+	retrievedUser, err := getUser(username)
 	if err != nil {
-		return err
+		return nil, err
 	}
-	*user = *retrievedUser
 
-	return nil
+	// TODO: Implement jwt
+	if password != retrievedUser.Password {
+		return nil, errors.New("password does not match")
+	}
+
+	userSensitive := models.UserSensitive{
+		Name: retrievedUser.Name,
+		Date: retrievedUser.Date,
+	}
+
+	return &userSensitive, nil
 }

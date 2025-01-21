@@ -32,5 +32,19 @@ func GetUserRoutes() func(router chi.Router) {
 			w.Header().Set("Content-Type", "application/json")
 			json.NewEncoder(w).Encode(response)
 		})
+
+		router.Patch("/edit/{username}-{password}", func(w http.ResponseWriter, req *http.Request) {
+			response, _ := users.HandleEdit(w, req)
+
+			w.Header().Set("Content-Type", "application/json")
+			json.NewEncoder(w).Encode(response)
+		})
+
+		router.Delete("/delete", func(w http.ResponseWriter, req *http.Request) {
+			response, _ := users.HandleDelete(w, req)
+
+			w.Header().Set("Content-Type", "application/json")
+			json.NewEncoder(w).Encode(response)
+		})
 	}
 }

@@ -3,14 +3,19 @@ package models
 import "fmt"
 
 const (
-	userIDKey   = "id"
-	userNameKey = "name"
-	userDateKey = "date_created"
+	UserNameKey     = "username"
+	UserPasswordKey = "password"
+	UserDateKey     = "date_created"
 )
 
 type User struct {
-	ID   int    `json:"id"`
-	Name string `json:"name"`
+	Name     string `json:"username"`
+	Password string `json:"password"`
+	Date     string `json:"date_created"`
+}
+
+type UserSensitive struct {
+	Name string `json:"username"`
 	Date string `json:"date_created"`
 }
 

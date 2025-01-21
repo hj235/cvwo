@@ -33,13 +33,13 @@ func HandleLogin(w http.ResponseWriter, r *http.Request) (*api.Response, error) 
 	}
 	defer r.Body.Close()
 
-	err = usersPkg.Login(&user)
+	userSensitive, err := usersPkg.Login(user.Name, user.Password)
 	if err != nil {
 		errorMessage := fmt.Sprintf(msgsPkg.ErrLoginFailure, Login)
 		return &response, utils.PrepareErrorResponse(&response, err, errorMessage, 1)
 	}
 
-	data, err := json.Marshal(user)
+	data, err := json.Marshal(userSensitive)
 	if err != nil {
 		errorMessage := fmt.Sprintf(msgsPkg.ErrEncodeView, Login)
 		return &response, utils.PrepareErrorResponse(&response, err, errorMessage, 1)

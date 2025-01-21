@@ -11,10 +11,13 @@ import (
 	"github.com/pkg/errors"
 )
 
-func Signup(user *models.User) error {
+func Signup(user *models.User) (*models.UserSensitive, error) {
 	// Value verification
 	if len(user.Name) <= 0 {
-		return errors.New("Name cannot be empty")
+		return nil, errors.New("Username cannot be empty")
+	}
+	if len(user.Password) <= 0 {
+		return nil, errors.New("Password cannot be empty")
 	}
 
 	user.Date = time.Now().Format(time.DateTime)
@@ -28,32 +31,25 @@ func Signup(user *models.User) error {
 
 	// Verify that name does not already exist
 	if utils.UsernameExists(user.Name) {
-		return errors.New("Username already exists")
+		return nil, errors.New("Username already exists")
 	}
 
 	// Add to database
-	query := "INSERT INTO webforum.users(name, date_created) VALUES(?, ?)"
+	query := "INSERT INTO users (username, password, date_created) VALUES(?, ?, ?)"
 	stmt, err := db.Prepare(query)
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
 	}
 	defer stmt.Close()
 
-	if _, err := stmt.Exec(user.Name, user.Date); err != nil {
-		log.Fatal(err)
+	if _, err := stmt.Exec(user.Name, user.Password, user.Date); err != nil {
+		log.Println(err)
 	}
 
-	// Query database for newly created user
-	rows, err := db.Query("SELECT * FROM webforum.users WHERE name=?", user.Name)
-	if err != nil {
-		log.Fatal(err)
-	}
-	rows.Next()
-
-	err = rows.Scan(&user.ID, &user.Name, &user.Date)
-	if err != nil {
-		log.Fatal(err)
+	userSensitive := models.UserSensitive{
+		Name: user.Name,
+		Date: user.Date,
 	}
 
-	return nil
+	return &userSensitive, nil
 }

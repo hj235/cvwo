@@ -9,51 +9,82 @@ import (
 	"github.com/hj235/cvwo/internal/models"
 )
 
-func ListAll() ([]models.User, error) {
+func GetUsersSensitive() ([]models.UserSensitive, error) {
 	db, err := database.GetDB()
 	if err != nil {
 		fmt.Println("Failed to reach database.")
 		log.Fatal(err)
 	}
 
-	query := "SELECT * FROM webforum.users"
+	query := "SELECT * FROM users"
 
 	rows, err := db.Query(query)
 	if err != nil {
 		log.Fatal(err)
 	}
-	var users []models.User
+	defer rows.Close()
+	var users []models.UserSensitive
 
 	for rows.Next() {
-		user := models.User{}
-		rows.Scan(&user.ID, &user.Name, &user.Date)
+		user := models.UserSensitive{}
+		pwPlaceholder := ""
+		if err := rows.Scan(&user.Name, &pwPlaceholder, &user.Date); err != nil {
+			log.Println("Error scanning row: ", err)
+			return nil, err
+		}
 		users = append(users, user)
 	}
 
 	return users, nil
 }
 
-func List(name string) (*models.User, error) {
+func getUser(name string) (*models.User, error) {
 	db, err := database.GetDB()
 	if err != nil {
 		fmt.Println("Failed to reach database.")
 		log.Fatal(err)
 	}
 
-	query := "SELECT * FROM webforum.users WHERE name=?"
+	query := "SELECT * FROM users WHERE username=?"
 
 	rows, err := db.Query(query, name)
 	if err != nil {
 		log.Fatal(err)
 	}
-	var user models.User
+	defer rows.Close()
 
 	if !rows.Next() {
-		return nil, errors.New("no user with the indicated name was found")
+		return nil, errors.New("no user with the indicated username was found")
 	}
 
-	rows.Scan()
-	rows.Scan(&user.ID, &user.Name, &user.Date)
+	var user models.User
+	rows.Scan(&user.Name, &user.Password, &user.Date)
 
 	return &user, nil
+}
+
+func GetUserSensitive(name string) (*models.UserSensitive, error) {
+	db, err := database.GetDB()
+	if err != nil {
+		fmt.Println("Failed to reach database.")
+		log.Fatal(err)
+	}
+
+	query := "SELECT * FROM users WHERE username=?"
+
+	rows, err := db.Query(query, name)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer rows.Close()
+
+	if !rows.Next() {
+		return nil, errors.New("no user with the indicated username was found")
+	}
+
+	var userSensitive models.UserSensitive
+	var pwPlaceholder string
+	rows.Scan(&userSensitive.Name, &pwPlaceholder, &userSensitive.Date)
+
+	return &userSensitive, nil
 }
