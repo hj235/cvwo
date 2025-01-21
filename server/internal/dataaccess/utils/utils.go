@@ -25,5 +25,5 @@ func UsernameExists(name string) bool {
 	rows.Next()
 	rows.Scan(&count)
 
-	return count != 0
+	return count > 0
 }

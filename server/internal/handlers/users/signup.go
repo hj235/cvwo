@@ -34,13 +34,13 @@ func HandleSignup(w http.ResponseWriter, r *http.Request) (*api.Response, error)
 	}
 	defer r.Body.Close()
 
-	err = usersPkg.Signup(&user)
+	userSensitive, err := usersPkg.Signup(&user)
 	if err != nil {
 		errorMessage := fmt.Sprintf(msgsPkg.ErrSignupFailure, Signup)
 		return &response, utils.PrepareErrorResponse(&response, err, errorMessage, 1)
 	}
 
-	data, err := json.Marshal(user)
+	data, err := json.Marshal(userSensitive)
 	if err != nil {
 		errorMessage := fmt.Sprintf(msgsPkg.ErrEncodeView, Signup)
 		return &response, utils.PrepareErrorResponse(&response, err, errorMessage, 1)
