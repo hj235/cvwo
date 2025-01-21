@@ -1,7 +1,6 @@
 package utils
 
 import (
-	"fmt"
 	"log"
 
 	"github.com/hj235/cvwo/internal/database"
@@ -10,15 +9,13 @@ import (
 func UsernameExists(name string) bool {
 	db, err := database.GetDB()
 	if err != nil {
-		fmt.Println("Failed to reach database.")
-		log.Fatal(err)
+		log.Fatal("Failed to reach database.", err)
 	}
 
-	query := "SELECT COUNT(*) FROM webforum.users WHERE `name`=? LIMIT 1"
+	query := "SELECT COUNT(*) FROM webforum.users WHERE `username`=? LIMIT 1"
 	rows, err := db.Query(query, name)
 	if err != nil {
-		fmt.Println("Failed to query database")
-		log.Fatal(err)
+		log.Println("Failed to query database", err)
 	}
 
 	var count int

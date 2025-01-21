@@ -9,7 +9,7 @@ import (
 	"github.com/hj235/cvwo/internal/models"
 )
 
-func ListAll() ([]models.UserSensitive, error) {
+func GetUsersSensitive() ([]models.UserSensitive, error) {
 	db, err := database.GetDB()
 	if err != nil {
 		fmt.Println("Failed to reach database.")
@@ -44,7 +44,7 @@ func getUser(name string) (*models.User, error) {
 		log.Fatal(err)
 	}
 
-	query := "SELECT * FROM webforum.users WHERE name=?"
+	query := "SELECT * FROM webforum.users WHERE username=?"
 
 	rows, err := db.Query(query, name)
 	if err != nil {
@@ -52,7 +52,7 @@ func getUser(name string) (*models.User, error) {
 	}
 
 	if !rows.Next() {
-		return nil, errors.New("no user with the indicated name was found")
+		return nil, errors.New("no user with the indicated username was found")
 	}
 
 	var user models.User
@@ -68,7 +68,7 @@ func GetUserSensitive(name string) (*models.UserSensitive, error) {
 		log.Fatal(err)
 	}
 
-	query := "SELECT * FROM webforum.users WHERE name=?"
+	query := "SELECT * FROM webforum.users WHERE username=?"
 
 	rows, err := db.Query(query, name)
 	if err != nil {
@@ -76,7 +76,7 @@ func GetUserSensitive(name string) (*models.UserSensitive, error) {
 	}
 
 	if !rows.Next() {
-		return nil, errors.New("no user with the indicated name was found")
+		return nil, errors.New("no user with the indicated username was found")
 	}
 
 	var userSensitive models.UserSensitive

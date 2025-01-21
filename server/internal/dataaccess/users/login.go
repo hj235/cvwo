@@ -10,7 +10,10 @@ import (
 func Login(username string, password string) (*models.UserSensitive, error) {
 	// Value verification
 	if len(username) <= 0 {
-		return nil, errors.New("name cannot be empty")
+		return nil, errors.New("username cannot be empty")
+	}
+	if len(password) <= 0 {
+		return nil, errors.New("password cannot be empty")
 	}
 
 	// Verify that name exists

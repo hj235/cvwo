@@ -18,7 +18,7 @@ const (
 func HandleListAll(w http.ResponseWriter, r *http.Request) (*api.Response, error) {
 	var response = api.Response{}
 
-	users, err := usersPkg.ListAll()
+	users, err := usersPkg.GetUsersSensitive()
 	if err != nil {
 		errorMessage := fmt.Sprintf(msgsPkg.ErrRetrieveUsers, ListUsers)
 		return &response, utils.PrepareErrorResponse(&response, err, errorMessage, 1)
