@@ -30,6 +30,7 @@ func HandleSignup(w http.ResponseWriter, r *http.Request) (*api.Response, error)
 
 	if err != nil {
 		errorMessage := fmt.Sprintf(msgsPkg.ErrParseForm, Signup)
+		w.WriteHeader(400)
 		return &response, utils.PrepareErrorResponse(&response, err, errorMessage, 1)
 	}
 	defer r.Body.Close()
@@ -37,12 +38,14 @@ func HandleSignup(w http.ResponseWriter, r *http.Request) (*api.Response, error)
 	userSensitive, err := usersPkg.Signup(&user)
 	if err != nil {
 		errorMessage := fmt.Sprintf(msgsPkg.ErrSignupFailure, Signup)
+		w.WriteHeader(400)
 		return &response, utils.PrepareErrorResponse(&response, err, errorMessage, 1)
 	}
 
 	data, err := json.Marshal(userSensitive)
 	if err != nil {
 		errorMessage := fmt.Sprintf(msgsPkg.ErrEncodeView, Signup)
+		w.WriteHeader(400)
 		return &response, utils.PrepareErrorResponse(&response, err, errorMessage, 1)
 	}
 

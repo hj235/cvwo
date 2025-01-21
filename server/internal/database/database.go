@@ -19,17 +19,18 @@ func InitialiseDB() {
 		fmt.Println("An error has occurred with the data source name.\nOpening a driver will typically not attempt to connect to the database.")
 		log.Fatal(err)
 	}
-
-	// Verify Database connection
-	err = db.Ping()
-	if err != nil {
-		fmt.Println("An error has occurred connecting to the database with the given DSN.")
-		log.Fatal(err)
-	}
-
-	fmt.Println("Successfully connected to database.")
-
 	DBInstance = db
+	log.Println("Opened MySql driver")
+
+	Ping()
+	log.Println("Connection to database established")
+}
+
+func Ping() {
+	err := DBInstance.Ping()
+	if err != nil {
+		log.Fatalln("An error has occurred establishing connection to the database")
+	}
 }
 
 func GetDB() (*sql.DB, error) {
