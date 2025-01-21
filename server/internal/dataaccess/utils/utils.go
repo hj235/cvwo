@@ -12,7 +12,7 @@ func UsernameExists(name string) bool {
 		log.Fatal("Failed to reach database.", err)
 	}
 
-	query := "SELECT COUNT(*) FROM webforum.users WHERE `username`=? LIMIT 1"
+	query := "SELECT COUNT(*) FROM users WHERE `username`=? LIMIT 1"
 	rows, err := db.Query(query, name)
 	if err != nil {
 		log.Println("Failed to query database", err)

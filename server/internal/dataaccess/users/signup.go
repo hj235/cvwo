@@ -35,7 +35,7 @@ func Signup(user *models.User) (*models.UserSensitive, error) {
 	}
 
 	// Add to database
-	query := "INSERT INTO webforum.users (username, password, date_created) VALUES(?, ?, ?)"
+	query := "INSERT INTO users (username, password, date_created) VALUES(?, ?, ?)"
 	stmt, err := db.Prepare(query)
 	if err != nil {
 		log.Println(err)

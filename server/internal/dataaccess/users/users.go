@@ -16,12 +16,13 @@ func GetUsersSensitive() ([]models.UserSensitive, error) {
 		log.Fatal(err)
 	}
 
-	query := "SELECT * FROM webforum.users"
+	query := "SELECT * FROM users"
 
 	rows, err := db.Query(query)
 	if err != nil {
 		log.Fatal(err)
 	}
+	defer rows.Close()
 	var users []models.UserSensitive
 
 	for rows.Next() {
@@ -44,12 +45,13 @@ func getUser(name string) (*models.User, error) {
 		log.Fatal(err)
 	}
 
-	query := "SELECT * FROM webforum.users WHERE username=?"
+	query := "SELECT * FROM users WHERE username=?"
 
 	rows, err := db.Query(query, name)
 	if err != nil {
 		log.Fatal(err)
 	}
+	defer rows.Close()
 
 	if !rows.Next() {
 		return nil, errors.New("no user with the indicated username was found")
@@ -68,12 +70,13 @@ func GetUserSensitive(name string) (*models.UserSensitive, error) {
 		log.Fatal(err)
 	}
 
-	query := "SELECT * FROM webforum.users WHERE username=?"
+	query := "SELECT * FROM users WHERE username=?"
 
 	rows, err := db.Query(query, name)
 	if err != nil {
 		log.Fatal(err)
 	}
+	defer rows.Close()
 
 	if !rows.Next() {
 		return nil, errors.New("no user with the indicated username was found")
