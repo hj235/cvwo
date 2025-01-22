@@ -9,7 +9,7 @@ import (
 	"github.com/pkg/errors"
 )
 
-func Create(author string, threadId int, comment *models.Comment) error {
+func Create(author string, comment *models.Comment) error {
 	// Value verification
 	if !utils.IsValidUsername(author) {
 		return errors.New("comment author is missing or has been deleted")
@@ -24,7 +24,7 @@ func Create(author string, threadId int, comment *models.Comment) error {
 
 	// Add to database
 	query := "INSERT INTO comments (author, thread_id, body, time_created) VALUES(?, ?, ?, ?)"
-	if _, err := db.Exec(query, author, threadId, comment.Body, comment.Created); err != nil {
+	if _, err := db.Exec(query, author, comment.ThreadId, comment.Body, comment.Created); err != nil {
 		return errors.Wrap(err, "error adding comment")
 	}
 

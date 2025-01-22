@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
-	"strconv"
 
 	"github.com/go-chi/chi/v5"
 	"github.com/hj235/cvwo/internal/api"
@@ -24,18 +23,9 @@ func HandleCreate(w http.ResponseWriter, r *http.Request) (*api.Response, error)
 
 	// Retrieve URL params (TODO: retrieve from jwt instead?)
 	username := chi.URLParam(r, "username")
-	idParam := chi.URLParam(r, "id")
-	id, err := strconv.Atoi(idParam)
-	if err != nil {
-		errorMessage := fmt.Sprintf(msgsPkg.ErrParseURLParams, ListComments)
-		wrappedError := utils.PrepareErrorResponse(&response, err, errorMessage, 1)
-		fmt.Println(wrappedError)
-		w.WriteHeader(400)
-		return &response, wrappedError
-	}
 
 	// Decode comment information from request body
-	err = json.NewDecoder(r.Body).Decode(&comment)
+	err := json.NewDecoder(r.Body).Decode(&comment)
 	if err != nil {
 		errorMessage := fmt.Sprintf(msgsPkg.ErrParseForm, Create)
 		wrappedError := utils.PrepareErrorResponse(&response, err, errorMessage, 1)
@@ -46,7 +36,7 @@ func HandleCreate(w http.ResponseWriter, r *http.Request) (*api.Response, error)
 	defer r.Body.Close()
 
 	// Data access
-	err = commentsPkg.Create(username, id, &comment)
+	err = commentsPkg.Create(username, &comment)
 	if err != nil {
 		errorMessage := fmt.Sprintf(msgsPkg.ErrCreateFailure, Subject, Create)
 		wrappedError := utils.PrepareErrorResponse(&response, err, errorMessage, 1)
