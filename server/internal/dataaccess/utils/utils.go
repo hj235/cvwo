@@ -7,10 +7,7 @@ import (
 )
 
 func UsernameExists(name string) bool {
-	db, err := database.GetDB()
-	if err != nil {
-		log.Fatal("Failed to reach database.", err)
-	}
+	db := database.GetDB()
 
 	query := "SELECT COUNT(*) FROM users WHERE `username`=? LIMIT 1"
 	rows, err := db.Query(query, name)

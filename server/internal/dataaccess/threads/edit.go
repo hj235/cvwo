@@ -2,7 +2,6 @@ package threads
 
 import (
 	"fmt"
-	"log"
 	"strconv"
 	"strings"
 	"time"
@@ -28,11 +27,7 @@ func Edit(threadId int, thread *models.Thread) (*models.Thread, error) {
 		return nil, fmt.Errorf("no fields were changed")
 	}
 
-	db, err := database.GetDB()
-	if err != nil {
-		fmt.Println("failed to reach database")
-		log.Fatal(err)
-	}
+	db := database.GetDB()
 
 	// TODO: Implement jwt and authentication
 

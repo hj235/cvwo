@@ -1,7 +1,6 @@
 package users
 
 import (
-	"fmt"
 	"log"
 
 	"github.com/hj235/cvwo/internal/database"
@@ -19,12 +18,7 @@ func Delete(user *models.User) error {
 		return errors.New("password cannot be empty")
 	}
 
-	// Get database
-	db, err := database.GetDB()
-	if err != nil {
-		fmt.Println("failed to reach database")
-		log.Fatal(err)
-	}
+	db := database.GetDB()
 
 	// Retrieve user from database
 	retrievedUser, err := getUser(user.Name)

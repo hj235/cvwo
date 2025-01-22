@@ -10,11 +10,7 @@ import (
 )
 
 func GetUsersSensitive() ([]models.UserSensitive, error) {
-	db, err := database.GetDB()
-	if err != nil {
-		fmt.Println("Failed to reach database.")
-		log.Fatal(err)
-	}
+	db := database.GetDB()
 
 	query := "SELECT * FROM users"
 
@@ -39,11 +35,7 @@ func GetUsersSensitive() ([]models.UserSensitive, error) {
 }
 
 func getUser(name string) (*models.User, error) {
-	db, err := database.GetDB()
-	if err != nil {
-		fmt.Println("Failed to reach database.")
-		log.Fatal(err)
-	}
+	db := database.GetDB()
 
 	query := "SELECT * FROM users WHERE username=?"
 
@@ -64,11 +56,7 @@ func getUser(name string) (*models.User, error) {
 }
 
 func GetUserSensitive(name string) (*models.UserSensitive, error) {
-	db, err := database.GetDB()
-	if err != nil {
-		fmt.Println("Failed to reach database.")
-		log.Fatal(err)
-	}
+	db := database.GetDB()
 
 	query := "SELECT * FROM users WHERE username=?"
 

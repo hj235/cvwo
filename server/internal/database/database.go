@@ -33,9 +33,9 @@ func Ping() {
 	}
 }
 
-func GetDB() (*sql.DB, error) {
+func GetDB() *sql.DB {
 	if DBInstance == nil {
 		InitialiseDB()
 	}
-	return DBInstance, nil
+	return DBInstance
 }

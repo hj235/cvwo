@@ -2,7 +2,6 @@ package users
 
 import (
 	"fmt"
-	"log"
 	"time"
 
 	"github.com/hj235/cvwo/internal/dataaccess/utils"
@@ -24,11 +23,7 @@ func Signup(user *models.User) (*models.UserSensitive, error) {
 	user.Date = time.Now().Format(time.DateTime)
 
 	// Get database
-	db, err := database.GetDB()
-	if err != nil {
-		fmt.Println("Failed to reach database")
-		log.Fatal(err)
-	}
+	db := database.GetDB()
 
 	// Verify that name does not already exist
 	if utils.UsernameExists(user.Name) {

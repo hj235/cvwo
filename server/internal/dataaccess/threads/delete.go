@@ -1,23 +1,16 @@
 package threads
 
 import (
-	"fmt"
-	"log"
-
 	"github.com/hj235/cvwo/internal/database"
 	"github.com/pkg/errors"
 )
 
 func Delete(threadId int) error {
-	db, err := database.GetDB()
-	if err != nil {
-		fmt.Println("failed to reach database")
-		log.Fatal(err)
-	}
+	db := database.GetDB()
 
 	// Retrieve thread from database
 	// retrievedThread, err := GetThread(threadId)
-	_, err = GetThread(threadId)
+	_, err := GetThread(threadId)
 	if err != nil {
 		return errors.Wrap(err, "error deleting thread: ")
 	}

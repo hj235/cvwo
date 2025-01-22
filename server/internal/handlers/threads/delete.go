@@ -18,17 +18,6 @@ const (
 
 func HandleDelete(w http.ResponseWriter, r *http.Request) (*api.Response, error) {
 	var response = api.Response{}
-	// thread := models.Thread{}
-
-	// err := json.NewDecoder(r.Body).Decode(&thread)
-	// if err != nil {
-	// 	errorMessage := fmt.Sprintf(msgsPkg.ErrParseForm, Delete)
-	// 	wrappedError := utils.PrepareErrorResponse(&response, err, errorMessage, 1)
-	// 	fmt.Println(wrappedError)
-	// 	w.WriteHeader(400)
-	// 	return &response, wrappedError
-	// }
-	// defer r.Body.Close()
 
 	idParam := chi.URLParam(r, "id")
 	id, err := strconv.Atoi(idParam)

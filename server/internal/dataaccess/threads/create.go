@@ -1,8 +1,6 @@
 package threads
 
 import (
-	"fmt"
-	"log"
 	"time"
 
 	"github.com/hj235/cvwo/internal/dataaccess/utils"
@@ -22,12 +20,7 @@ func Create(thread *models.Thread) error {
 
 	thread.Created = time.Now().Format(time.DateTime)
 
-	// Get database
-	db, err := database.GetDB()
-	if err != nil {
-		fmt.Println("Failed to reach database")
-		log.Fatal(err)
-	}
+	db := database.GetDB()
 
 	// Add to database
 	query := "INSERT INTO threads (author, title, body, time_created) VALUES(?, ?, ?, ?)"

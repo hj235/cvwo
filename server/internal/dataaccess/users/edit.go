@@ -2,7 +2,6 @@ package users
 
 import (
 	"fmt"
-	"log"
 	"strings"
 
 	"github.com/hj235/cvwo/internal/database"
@@ -26,11 +25,7 @@ func Edit(username string, user *models.User) (*models.UserSensitive, error) {
 		return nil, fmt.Errorf("no fields were changed")
 	}
 
-	db, err := database.GetDB()
-	if err != nil {
-		fmt.Println("failed to reach database")
-		log.Fatal(err)
-	}
+	db := database.GetDB()
 
 	// TODO: Implement jwt and authentication
 
