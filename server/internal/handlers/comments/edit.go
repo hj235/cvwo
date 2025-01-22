@@ -1,4 +1,4 @@
-package threads
+package comments
 
 import (
 	"encoding/json"
@@ -8,7 +8,7 @@ import (
 
 	"github.com/go-chi/chi/v5"
 	"github.com/hj235/cvwo/internal/api"
-	threadsPkg "github.com/hj235/cvwo/internal/dataaccess/threads"
+	commentsPkg "github.com/hj235/cvwo/internal/dataaccess/comments"
 	msgsPkg "github.com/hj235/cvwo/internal/handlers/messages"
 	"github.com/hj235/cvwo/internal/handlers/utils"
 	"github.com/hj235/cvwo/internal/models"
@@ -20,9 +20,9 @@ const (
 
 func HandleEdit(w http.ResponseWriter, r *http.Request) (*api.Response, error) {
 	var response = api.Response{}
-	thread := models.Thread{}
+	comment := models.Comment{}
 
-	err := json.NewDecoder(r.Body).Decode(&thread)
+	err := json.NewDecoder(r.Body).Decode(&comment)
 	if err != nil {
 		errorMessage := fmt.Sprintf(msgsPkg.ErrParseForm, Edit)
 		wrappedError := utils.PrepareErrorResponse(&response, err, errorMessage, 1)
@@ -42,7 +42,7 @@ func HandleEdit(w http.ResponseWriter, r *http.Request) (*api.Response, error) {
 		return &response, wrappedError
 	}
 
-	updatedThread, err := threadsPkg.Edit(id, &thread)
+	updatedComment, err := commentsPkg.Edit(id, &comment)
 	if err != nil {
 		errorMessage := fmt.Sprintf(msgsPkg.ErrEditFailure, Subject, Edit)
 		wrappedError := utils.PrepareErrorResponse(&response, err, errorMessage, 1)
@@ -51,7 +51,7 @@ func HandleEdit(w http.ResponseWriter, r *http.Request) (*api.Response, error) {
 		return &response, wrappedError
 	}
 
-	data, err := json.Marshal(updatedThread)
+	data, err := json.Marshal(updatedComment)
 	if err != nil {
 		errorMessage := fmt.Sprintf(msgsPkg.ErrEncodeView, Edit)
 		wrappedError := utils.PrepareErrorResponse(&response, err, errorMessage, 1)

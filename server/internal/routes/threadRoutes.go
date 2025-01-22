@@ -38,7 +38,7 @@ func protectedThreadRoutes() func(router chi.Router) {
 		// router.Use(middleware.Verifier)
 		// router.Use(middleware.Authenticator)
 
-		router.Post("/create", func(w http.ResponseWriter, req *http.Request) {
+		router.Post("/create/{username}", func(w http.ResponseWriter, req *http.Request) {
 			response, _ := threads.HandleCreate(w, req)
 			json.NewEncoder(w).Encode(response)
 		})

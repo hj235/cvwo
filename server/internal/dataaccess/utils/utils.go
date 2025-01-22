@@ -42,3 +42,7 @@ func IsValidAuthor(author sql.NullString) bool {
 func IsValidTitle(title string) bool {
 	return len(title) > 0
 }
+
+func IsValidComment(body string) bool {
+	return len(body) > 0
+}

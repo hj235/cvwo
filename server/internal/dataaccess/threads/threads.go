@@ -1,8 +1,6 @@
 package threads
 
 import (
-	"log"
-
 	"github.com/hj235/cvwo/internal/database"
 	"github.com/hj235/cvwo/internal/models"
 	"github.com/pkg/errors"
@@ -22,7 +20,6 @@ func GetThreads() ([]models.Thread, error) {
 	for rows.Next() {
 		thread := models.Thread{}
 		if err := rows.Scan(&thread.Id, &thread.Author, &thread.Title, &thread.Body, &thread.Created, &thread.Edited); err != nil {
-			log.Println("Error scanning row: ", err)
 			return nil, errors.Wrap(err, "unable to scan threads")
 		}
 		threads = append(threads, thread)

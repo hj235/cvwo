@@ -9,9 +9,9 @@ import (
 	"github.com/pkg/errors"
 )
 
-func Create(thread *models.Thread) error {
+func Create(author string, thread *models.Thread) error {
 	// Value verification
-	if !utils.IsValidAuthor(thread.Author) {
+	if !utils.IsValidUsername(author) {
 		return errors.New("thread author is missing or has been deleted")
 	}
 	if !utils.IsValidTitle(thread.Title) {
@@ -24,7 +24,7 @@ func Create(thread *models.Thread) error {
 
 	// Add to database
 	query := "INSERT INTO threads (author, title, body, time_created) VALUES(?, ?, ?, ?)"
-	if _, err := db.Exec(query, thread.Author, thread.Title, thread.Body, thread.Created); err != nil {
+	if _, err := db.Exec(query, author, thread.Title, thread.Body, thread.Created); err != nil {
 		return errors.Wrap(err, "error adding thread")
 	}
 
