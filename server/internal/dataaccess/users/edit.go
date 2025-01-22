@@ -26,7 +26,6 @@ func Edit(username string, user *models.User) (*models.UserSensitive, error) {
 		return nil, fmt.Errorf("no fields were changed")
 	}
 
-	// Get database
 	db, err := database.GetDB()
 	if err != nil {
 		fmt.Println("failed to reach database")

@@ -24,3 +24,15 @@ func UsernameExists(name string) bool {
 
 	return count > 0
 }
+
+func IsValidUsername(username string) bool {
+	return len(username) > 0
+}
+
+func IsValidPassword(password string) bool {
+	return len(password) > 0
+}
+
+func IsValidTitle(title string) bool {
+	return len(title) > 0
+}

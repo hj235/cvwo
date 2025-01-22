@@ -10,45 +10,45 @@ import (
 	"github.com/hj235/cvwo/internal/middleware"
 )
 
-func GetUserRoutes() func(router chi.Router) {
+func GetTagRoutes() func(router chi.Router) {
 	return func(router chi.Router) {
 		router.Use(middleware.DefaultMiddleware)
 
-		router.Group(publicUserRoutes())
-		router.Group(protectedUserRoutes())
+		router.Group(publicTagRoutes())
+		router.Group(protectedTagRoutes())
 	}
 }
 
-func publicUserRoutes() func(router chi.Router) {
+func publicTagRoutes() func(router chi.Router) {
 	return func(router chi.Router) {
 		router.Get("/", func(w http.ResponseWriter, req *http.Request) {
 			response, _ := users.HandleListAll(w, req)
 			json.NewEncoder(w).Encode(response)
 		})
 
-		router.Post("/signup", func(w http.ResponseWriter, req *http.Request) {
+		router.Get("/{id}", func(w http.ResponseWriter, req *http.Request) {
 			response, _ := users.HandleSignup(w, req)
-			json.NewEncoder(w).Encode(response)
-		})
-
-		router.Post("/login", func(w http.ResponseWriter, req *http.Request) {
-			response, _ := users.HandleLogin(w, req)
 			json.NewEncoder(w).Encode(response)
 		})
 	}
 }
 
-func protectedUserRoutes() func(router chi.Router) {
+func protectedTagRoutes() func(router chi.Router) {
 	return func(router chi.Router) {
 		// router.Use(middleware.Verifier)
 		// router.Use(middleware.Authenticator)
 
-		router.Patch("/edit/{username}", func(w http.ResponseWriter, req *http.Request) {
+		router.Post("/create", func(w http.ResponseWriter, req *http.Request) {
+			response, _ := users.HandleLogin(w, req)
+			json.NewEncoder(w).Encode(response)
+		})
+
+		router.Patch("/edit/{id}", func(w http.ResponseWriter, req *http.Request) {
 			response, _ := users.HandleEdit(w, req)
 			json.NewEncoder(w).Encode(response)
 		})
 
-		router.Delete("/delete", func(w http.ResponseWriter, req *http.Request) {
+		router.Delete("/delete/{id}", func(w http.ResponseWriter, req *http.Request) {
 			response, _ := users.HandleDelete(w, req)
 			json.NewEncoder(w).Encode(response)
 		})

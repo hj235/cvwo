@@ -18,6 +18,9 @@ func Setup() chi.Router {
 func setUpRoutes(router chi.Router) {
 	router.Group(routes.GetRoutes())
 	router.Route("/user", routes.GetUserRoutes())
+	router.Route("/thread", routes.GetThreadRoutes())
+	router.Route("/comment", routes.GetCommentRoutes())
+	router.Route("/tag", routes.GetTagRoutes())
 }
 
 func setUpMiddleware(router chi.Router) {

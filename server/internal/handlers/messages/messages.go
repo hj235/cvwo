@@ -1,20 +1,21 @@
 package messages
 
 const (
-	SuccessfulListUsersMessage = "Successfully listed users"
-	SuccessfulSignupMessage    = "Successfully signed up"
-	SuccessfulLoginMessage     = "Successfully logged in"
-	SuccessfulEditMessage      = "Successfully edited user"
-	SuccessfulDeleteMessage    = "Successfully deleted user"
+	SuccessfulCreateMessage   = "Successfully created %s"
+	SuccessfulListMessage     = "Successfully listed %ss"
+	SuccessfulRetrieveMessage = "Successfully retrieved %s"
+	SuccessfulEditMessage     = "Successfully edited %s"
+	SuccessfulDeleteMessage   = "Successfully deleted %s"
+	SuccessfulLoginMessage    = "Successfully logged in"
 
-	ErrSignupFailure = "Failed to signup user in %s"
-	ErrLoginFailure  = "Failed to login user in %s"
-	ErrEditFailure   = "Failed to edit user in %s"
-	ErrDeleteFailure = "Failed to delete user in %s"
+	ErrCreateFailure = "Failed to create %s in %s"
+	ErrRetrieveData  = "Failed to retrieve data in %s"
+	ErrEditFailure   = "Failed to edit %s in %s"
+	ErrDeleteFailure = "Failed to delete %s in %s"
+	ErrLoginFailure  = "Failed to login in %s"
 
 	ErrParseForm        = "Failed to parse form in %s"
+	ErrParseURLParams   = "Failed to parse URL parameters in %s"
 	ErrRetrieveDatabase = "Failed to retrieve database in %s"
-	ErrRetrieveUser     = "Failed to retrieve user in %s"
-	ErrRetrieveUsers    = "Failed to retrieve users in %s"
-	ErrEncodeView       = "Failed to encode user into JSON format in %s"
+	ErrEncodeView       = "Failed to encode data into JSON format in %s"
 )

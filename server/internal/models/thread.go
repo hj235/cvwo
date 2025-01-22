@@ -1,8 +1,12 @@
 package models
 
+import (
+	"database/sql"
+)
+
 const (
 	ThreadIdKey      = "id"
-	ThreadNameKey    = "author"
+	ThreadAuthorKey  = "author"
 	ThreadTitleKey   = "title"
 	ThreadBodyKey    = "body"
 	ThreadCreatedKey = "time_created"
@@ -10,10 +14,10 @@ const (
 )
 
 type Thread struct {
-	Id      int    `json:"id"`
-	Name    string `json:"author"`
-	Title   string `json:"title"`
-	Body    string `json:"body"`
-	Created string `json:"time_created"`
-	Edited  string `json:"time_edited"`
+	Id      int            `json:"id"`
+	Author  string         `json:"author"`
+	Title   string         `json:"title"`
+	Body    string         `json:"body"`
+	Created string         `json:"time_created"`
+	Edited  sql.NullString `json:"time_edited"`
 }

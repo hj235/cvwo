@@ -12,7 +12,8 @@ import (
 )
 
 const (
-	ListUsers = "users.HandleList"
+	Subject   = "user"
+	ListUsers = "users.users.HandleList"
 )
 
 func HandleListAll(w http.ResponseWriter, r *http.Request) (*api.Response, error) {
@@ -20,7 +21,7 @@ func HandleListAll(w http.ResponseWriter, r *http.Request) (*api.Response, error
 
 	users, err := usersPkg.GetUsersSensitive()
 	if err != nil {
-		errorMessage := fmt.Sprintf(msgsPkg.ErrRetrieveUsers, ListUsers)
+		errorMessage := fmt.Sprintf(msgsPkg.ErrRetrieveData, ListUsers)
 		wrappedError := utils.PrepareErrorResponse(&response, err, errorMessage, 1)
 		fmt.Println(wrappedError)
 		w.WriteHeader(400)
@@ -37,7 +38,7 @@ func HandleListAll(w http.ResponseWriter, r *http.Request) (*api.Response, error
 	}
 
 	response.Payload.Data = data
-	response.Messages = append(response.Messages, msgsPkg.SuccessfulListUsersMessage)
+	response.Messages = append(response.Messages, fmt.Sprintf(msgsPkg.SuccessfulListMessage, Subject))
 
 	return &response, nil
 }

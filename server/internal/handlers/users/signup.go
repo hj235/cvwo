@@ -13,7 +13,7 @@ import (
 )
 
 const (
-	Signup = "signup.Signup"
+	Signup = "users.signup.Signup"
 )
 
 func HandleSignup(w http.ResponseWriter, r *http.Request) (*api.Response, error) {
@@ -39,7 +39,7 @@ func HandleSignup(w http.ResponseWriter, r *http.Request) (*api.Response, error)
 
 	userSensitive, err := usersPkg.Signup(&user)
 	if err != nil {
-		errorMessage := fmt.Sprintf(msgsPkg.ErrSignupFailure, Signup)
+		errorMessage := fmt.Sprintf(msgsPkg.ErrCreateFailure, Subject, Signup)
 		wrappedError := utils.PrepareErrorResponse(&response, err, errorMessage, 1)
 		fmt.Println(wrappedError)
 		w.WriteHeader(400)
@@ -56,7 +56,7 @@ func HandleSignup(w http.ResponseWriter, r *http.Request) (*api.Response, error)
 	}
 
 	response.Payload.Data = data
-	response.Messages = append(response.Messages, msgsPkg.SuccessfulSignupMessage)
+	response.Messages = append(response.Messages, fmt.Sprintf(msgsPkg.SuccessfulCreateMessage, Subject))
 
 	return &response, nil
 }
