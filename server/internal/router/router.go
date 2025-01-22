@@ -2,8 +2,8 @@ package router
 
 import (
 	"github.com/go-chi/chi/v5"
-
 	chiMiddleware "github.com/go-chi/chi/v5/middleware"
+	"github.com/hj235/cvwo/internal/auth"
 	"github.com/hj235/cvwo/internal/routes"
 )
 
@@ -11,6 +11,7 @@ func Setup() chi.Router {
 	router := chi.NewRouter()
 	setUpMiddleware(router)
 	setUpRoutes(router)
+	auth.InitAuth()
 	return router
 }
 

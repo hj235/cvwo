@@ -14,6 +14,13 @@ func GetUserRoutes() func(router chi.Router) {
 	return func(router chi.Router) {
 		router.Use(middleware.DefaultMiddleware)
 
+		router.Group(publicRoutes())
+		router.Group(protectedRoutes())
+	}
+}
+
+func publicRoutes() func(router chi.Router) {
+	return func(router chi.Router) {
 		router.Get("/", func(w http.ResponseWriter, req *http.Request) {
 			response, _ := users.HandleListAll(w, req)
 			json.NewEncoder(w).Encode(response)
@@ -28,6 +35,13 @@ func GetUserRoutes() func(router chi.Router) {
 			response, _ := users.HandleLogin(w, req)
 			json.NewEncoder(w).Encode(response)
 		})
+	}
+}
+
+func protectedRoutes() func(router chi.Router) {
+	return func(router chi.Router) {
+		// router.Use(middleware.Verifier)
+		// router.Use(middleware.Authenticator)
 
 		router.Patch("/edit/{username}-{password}", func(w http.ResponseWriter, req *http.Request) {
 			response, _ := users.HandleEdit(w, req)
