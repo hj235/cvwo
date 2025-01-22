@@ -1,6 +1,7 @@
 package utils
 
 import (
+	"database/sql"
 	"log"
 
 	"github.com/hj235/cvwo/internal/database"
@@ -28,6 +29,14 @@ func IsValidUsername(username string) bool {
 
 func IsValidPassword(password string) bool {
 	return len(password) > 0
+}
+
+func IsValidAuthor(author sql.NullString) bool {
+	if author.Valid {
+		return !IsValidUsername(author.String) || !UsernameExists(author.String)
+	} else {
+		return false
+	}
 }
 
 func IsValidTitle(title string) bool {

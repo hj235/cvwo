@@ -1,5 +1,9 @@
 package models
 
+import (
+	"database/sql"
+)
+
 const (
 	CommentIdKey       = "id"
 	CommentNameKey     = "author"
@@ -10,10 +14,10 @@ const (
 )
 
 type Comment struct {
-	Id       int    `json:"id"`
-	Name     string `json:"author"`
-	ThreadId int    `json:"thread_id"`
-	Body     string `json:"body"`
-	Created  string `json:"time_created"`
-	Edited   string `json:"time_edited"`
+	Id       int            `json:"id"`
+	Author   sql.NullString `json:"author"`
+	ThreadId int            `json:"thread_id"`
+	Body     string         `json:"body"`
+	Created  string         `json:"time_created"`
+	Edited   sql.NullString `json:"time_edited"`
 }

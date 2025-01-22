@@ -15,7 +15,7 @@ const (
 
 type Thread struct {
 	Id      int            `json:"id"`
-	Author  string         `json:"author"`
+	Author  sql.NullString `json:"author"`
 	Title   string         `json:"title"`
 	Body    string         `json:"body"`
 	Created string         `json:"time_created"`

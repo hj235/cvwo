@@ -11,8 +11,8 @@ import (
 
 func Create(thread *models.Thread) error {
 	// Value verification
-	if !utils.IsValidUsername(thread.Author) || !utils.UsernameExists(thread.Author) {
-		return errors.New("thread author is missing")
+	if !utils.IsValidAuthor(thread.Author) {
+		return errors.New("thread author is missing or has been deleted")
 	}
 	if !utils.IsValidTitle(thread.Title) {
 		return errors.New("thread title is missing")
