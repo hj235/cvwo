@@ -7,6 +7,7 @@ import (
 	"github.com/hj235/cvwo/internal/database"
 	"github.com/hj235/cvwo/internal/models"
 	"github.com/pkg/errors"
+	"golang.org/x/crypto/bcrypt"
 )
 
 func Delete(user *models.User) error {
@@ -31,10 +32,11 @@ func Delete(user *models.User) error {
 		return err
 	}
 
-	// TODO: Implement jwt
-	if user.Password != retrievedUser.Password {
-		return errors.New("password does not match")
+	if err := bcrypt.CompareHashAndPassword([]byte(retrievedUser.Password), []byte(user.Password)); err != nil {
+		return errors.Wrap(err, "could not verify password")
 	}
+
+	// TODO: Implement jwt
 
 	// Delete from database
 	query := "DELETE FROM users WHERE username=? AND password=?"

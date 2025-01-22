@@ -21,15 +21,19 @@ func HandleListAll(w http.ResponseWriter, r *http.Request) (*api.Response, error
 	users, err := usersPkg.GetUsersSensitive()
 	if err != nil {
 		errorMessage := fmt.Sprintf(msgsPkg.ErrRetrieveUsers, ListUsers)
+		wrappedError := utils.PrepareErrorResponse(&response, err, errorMessage, 1)
+		fmt.Println(wrappedError)
 		w.WriteHeader(400)
-		return &response, utils.PrepareErrorResponse(&response, err, errorMessage, 1)
+		return &response, wrappedError
 	}
 
 	data, err := json.Marshal(users)
 	if err != nil {
 		errorMessage := fmt.Sprintf(msgsPkg.ErrEncodeView, ListUsers)
+		wrappedError := utils.PrepareErrorResponse(&response, err, errorMessage, 1)
+		fmt.Println(wrappedError)
 		w.WriteHeader(400)
-		return &response, utils.PrepareErrorResponse(&response, err, errorMessage, 1)
+		return &response, wrappedError
 	}
 
 	response.Payload.Data = data

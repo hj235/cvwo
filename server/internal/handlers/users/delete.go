@@ -23,14 +23,20 @@ func HandleDelete(w http.ResponseWriter, r *http.Request) (*api.Response, error)
 
 	if err != nil {
 		errorMessage := fmt.Sprintf(msgsPkg.ErrParseForm, Delete)
-		return &response, utils.PrepareErrorResponse(&response, err, errorMessage, 1)
+		wrappedError := utils.PrepareErrorResponse(&response, err, errorMessage, 1)
+		fmt.Println(wrappedError)
+		w.WriteHeader(400)
+		return &response, wrappedError
 	}
 	defer r.Body.Close()
 
 	err = usersPkg.Delete(&user)
 	if err != nil {
 		errorMessage := fmt.Sprintf(msgsPkg.ErrDeleteFailure, Delete)
-		return &response, utils.PrepareErrorResponse(&response, err, errorMessage, 1)
+		wrappedError := utils.PrepareErrorResponse(&response, err, errorMessage, 1)
+		fmt.Println(wrappedError)
+		w.WriteHeader(400)
+		return &response, wrappedError
 	}
 
 	// data, err := json.Marshal(userSensitive)
@@ -41,5 +47,6 @@ func HandleDelete(w http.ResponseWriter, r *http.Request) (*api.Response, error)
 
 	// response.Payload.Data = data
 	response.Messages = append(response.Messages, msgsPkg.SuccessfulDeleteMessage)
+
 	return &response, nil
 }

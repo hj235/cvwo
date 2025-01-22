@@ -30,26 +30,33 @@ func HandleSignup(w http.ResponseWriter, r *http.Request) (*api.Response, error)
 
 	if err != nil {
 		errorMessage := fmt.Sprintf(msgsPkg.ErrParseForm, Signup)
+		wrappedError := utils.PrepareErrorResponse(&response, err, errorMessage, 1)
+		fmt.Println(wrappedError)
 		w.WriteHeader(400)
-		return &response, utils.PrepareErrorResponse(&response, err, errorMessage, 1)
+		return &response, wrappedError
 	}
 	defer r.Body.Close()
 
 	userSensitive, err := usersPkg.Signup(&user)
 	if err != nil {
 		errorMessage := fmt.Sprintf(msgsPkg.ErrSignupFailure, Signup)
+		wrappedError := utils.PrepareErrorResponse(&response, err, errorMessage, 1)
+		fmt.Println(wrappedError)
 		w.WriteHeader(400)
-		return &response, utils.PrepareErrorResponse(&response, err, errorMessage, 1)
+		return &response, wrappedError
 	}
 
 	data, err := json.Marshal(userSensitive)
 	if err != nil {
 		errorMessage := fmt.Sprintf(msgsPkg.ErrEncodeView, Signup)
+		wrappedError := utils.PrepareErrorResponse(&response, err, errorMessage, 1)
+		fmt.Println(wrappedError)
 		w.WriteHeader(400)
-		return &response, utils.PrepareErrorResponse(&response, err, errorMessage, 1)
+		return &response, wrappedError
 	}
 
 	response.Payload.Data = data
 	response.Messages = append(response.Messages, msgsPkg.SuccessfulSignupMessage)
+
 	return &response, nil
 }

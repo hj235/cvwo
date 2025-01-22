@@ -29,20 +29,29 @@ func HandleLogin(w http.ResponseWriter, r *http.Request) (*api.Response, error) 
 	err := json.NewDecoder(r.Body).Decode(&user)
 	if err != nil {
 		errorMessage := fmt.Sprintf(msgsPkg.ErrParseForm, Login)
-		return &response, utils.PrepareErrorResponse(&response, err, errorMessage, 1)
+		wrappedError := utils.PrepareErrorResponse(&response, err, errorMessage, 1)
+		fmt.Println(wrappedError)
+		w.WriteHeader(400)
+		return &response, wrappedError
 	}
 	defer r.Body.Close()
 
 	userSensitive, err := usersPkg.Login(user.Name, user.Password)
 	if err != nil {
 		errorMessage := fmt.Sprintf(msgsPkg.ErrLoginFailure, Login)
-		return &response, utils.PrepareErrorResponse(&response, err, errorMessage, 1)
+		wrappedError := utils.PrepareErrorResponse(&response, err, errorMessage, 1)
+		fmt.Println(wrappedError)
+		w.WriteHeader(400)
+		return &response, wrappedError
 	}
 
 	data, err := json.Marshal(userSensitive)
 	if err != nil {
 		errorMessage := fmt.Sprintf(msgsPkg.ErrEncodeView, Login)
-		return &response, utils.PrepareErrorResponse(&response, err, errorMessage, 1)
+		wrappedError := utils.PrepareErrorResponse(&response, err, errorMessage, 1)
+		fmt.Println(wrappedError)
+		w.WriteHeader(400)
+		return &response, wrappedError
 	}
 
 	response.Payload.Data = data

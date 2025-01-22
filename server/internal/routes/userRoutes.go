@@ -43,7 +43,7 @@ func protectedRoutes() func(router chi.Router) {
 		// router.Use(middleware.Verifier)
 		// router.Use(middleware.Authenticator)
 
-		router.Patch("/edit/{username}-{password}", func(w http.ResponseWriter, req *http.Request) {
+		router.Patch("/edit/{username}", func(w http.ResponseWriter, req *http.Request) {
 			response, _ := users.HandleEdit(w, req)
 			json.NewEncoder(w).Encode(response)
 		})

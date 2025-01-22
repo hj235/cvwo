@@ -9,6 +9,7 @@ import (
 	"github.com/hj235/cvwo/internal/database"
 	"github.com/hj235/cvwo/internal/models"
 	"github.com/pkg/errors"
+	"golang.org/x/crypto/bcrypt"
 )
 
 func Signup(user *models.User) (*models.UserSensitive, error) {
@@ -34,16 +35,25 @@ func Signup(user *models.User) (*models.UserSensitive, error) {
 		return nil, errors.New("Username already exists")
 	}
 
+	hashedPw, err := bcrypt.GenerateFromPassword([]byte(user.Password), bcrypt.DefaultCost)
+	if err != nil {
+		return nil, fmt.Errorf("error hashing password: %w", err)
+	}
+
 	// Add to database
 	query := "INSERT INTO users (username, password, date_created) VALUES(?, ?, ?)"
-	stmt, err := db.Prepare(query)
-	if err != nil {
-		log.Println(err)
-	}
-	defer stmt.Close()
+	// stmt, err := db.Prepare(query)
+	// if err != nil {
+	// 	log.Println(err)
+	// }
+	// defer stmt.Close()
 
-	if _, err := stmt.Exec(user.Name, user.Password, user.Date); err != nil {
-		log.Println(err)
+	// if _, err := stmt.Exec(user.Name, hashedPw, user.Date); err != nil {
+	// 	log.Println(err)
+	// }
+
+	if _, err := db.Exec(query, user.Name, hashedPw, user.Date); err != nil {
+		return nil, errors.Wrap(err, "error adding user")
 	}
 
 	userSensitive := models.UserSensitive{

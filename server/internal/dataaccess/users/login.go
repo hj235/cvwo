@@ -1,10 +1,9 @@
 package users
 
 import (
-	"errors"
-
-	"github.com/hj235/cvwo/internal/dataaccess/utils"
 	"github.com/hj235/cvwo/internal/models"
+	"github.com/pkg/errors"
+	"golang.org/x/crypto/bcrypt"
 )
 
 func Login(username string, password string) (*models.UserSensitive, error) {
@@ -16,21 +15,17 @@ func Login(username string, password string) (*models.UserSensitive, error) {
 		return nil, errors.New("password cannot be empty")
 	}
 
-	// Verify that name exists
-	if !utils.UsernameExists(username) {
-		return nil, errors.New("username does not exist")
-	}
-
 	// Retrieve user from database
 	retrievedUser, err := getUser(username)
 	if err != nil {
-		return nil, err
+		return nil, errors.Wrap(err, "could not retrieve the specified user")
+	}
+
+	if err := bcrypt.CompareHashAndPassword([]byte(retrievedUser.Password), []byte(password)); err != nil {
+		return nil, errors.Wrap(err, "could not verify password")
 	}
 
 	// TODO: Implement jwt
-	if password != retrievedUser.Password {
-		return nil, errors.New("password does not match")
-	}
 
 	userSensitive := models.UserSensitive{
 		Name: retrievedUser.Name,

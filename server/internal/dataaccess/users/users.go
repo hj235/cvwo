@@ -54,7 +54,7 @@ func getUser(name string) (*models.User, error) {
 	defer rows.Close()
 
 	if !rows.Next() {
-		return nil, errors.New("no user with the indicated username was found")
+		return nil, fmt.Errorf("no user matches the given username: %v", name)
 	}
 
 	var user models.User
