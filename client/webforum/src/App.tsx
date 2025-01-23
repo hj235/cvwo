@@ -5,7 +5,7 @@ import './App.css'
 // Pages
 import Landing from './pages/Landing'
 import Login from './pages/Login';
-import NewLogin from './pages/NewLogin';
+import Signup from './pages/Signup';
 
 // Components
 
@@ -20,13 +20,13 @@ function App() {
     <>
       <ToastContainer/>
       <BrowserRouter>
-        <Box sx={{ display: 'flex', flex: "auto", flexGrow: 1, height: "100vh", alignItems: "center", justifyContent: "center" }}>
+        <Box sx={{ display: 'flex', flex: 1, flexGrow: 1, height: "100vh", alignItems: "center", justifyContent: "center" }}>
           <SideMenu/>
 
           <Routes>
             <Route path='/' element={<Landing/>}/>
             <Route path='/login' element={<Login/>} />
-            <Route path='/newlogin' element={<NewLogin/>} />
+            <Route path='/signup' element={<Signup/>} />
           </Routes>
         </Box>
       </BrowserRouter>

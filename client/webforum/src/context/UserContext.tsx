@@ -27,10 +27,11 @@ export const UserContext = createContext<UserContextType | null>(null);
 export function userReducer(state: UserState, action: CounterAction): UserState {
   switch (action.type) {
     case "LOGIN":
+      localStorage.setItem('user', JSON.stringify(action.payload));
       console.log(`Logged in as user: ${action.payload.username}`)
       return { ...action.payload, isLoggedIn: true };
     case "LOGOUT":
-      console.log(`Logged out`)
+      console.log(`User is logged out`)
       return initialUserState;
     default:
       return state;
