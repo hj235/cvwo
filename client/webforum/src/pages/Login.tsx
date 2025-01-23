@@ -1,25 +1,17 @@
 import React, { useState, useEffect } from "react";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
-import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import Paper from "@mui/material/Paper";
-import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid";
-import Typography from "@mui/material/Typography";
-import { ToastContainer, toast } from "react-toastify";
+import { Avatar, Button, CssBaseline, TextField, Paper, Box, Grid, Typography, Link } from "@mui/material"
+import { toast } from "react-toastify";
 import { useLogin } from "../hooks/auth/useLogin.jsx";
 import LockIcon from "@mui/icons-material/Lock";
+import { useLoggedInRedirect } from "../hooks/auth/useLoggedInRedirect.js";
 // import { useRandomColorGradient } from "../hooks/auth/useRandomColorGradient.jsx";
 
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [isAdmin, setIsAdmin] = useState(false);
   const [formError, setFormError] = useState({ username: "", password: "" });
   const { login, loading, error } = useLogin();
+  useLoggedInRedirect();
   // const { color, direction } = useRandomColorGradient();
 
   useEffect(() => {
@@ -50,8 +42,6 @@ const Login = () => {
 
   return (
     <>
-      <ToastContainer/>
-      {/* {error && <CustomAlert message={error} />} */}
       <Grid container component="main" sx={{ height: "100vh" }}>
         <CssBaseline />
         <Grid
@@ -122,16 +112,6 @@ const Login = () => {
               <Typography className="error-message" color="error">
                 {formError.password}
               </Typography>
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    value="remember"
-                    color="primary"
-                    onChange={() => setIsAdmin(!isAdmin)}
-                  />
-                }
-                label="Admin Login"
-              />
               <Button
                 fullWidth
                 type="submit"
@@ -144,7 +124,10 @@ const Login = () => {
               <Grid container>
                 <Grid item xs>
                   <Typography variant="body2">
-                    Forgot password? Don't have an account? Contact an Admin!
+                    Don't have an account?
+                  </Typography>
+                  <Typography >
+                    <Link href="/signup" style={{ textDecorationColor: 'grey', color: 'grey' }} underline='always' >Register here</Link>
                   </Typography>
                 </Grid>
               </Grid>

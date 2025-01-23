@@ -8,20 +8,21 @@ import Login from './pages/Login';
 // Components
 
 // Dependencies
-import { useUserContext } from './hooks/auth/useUserContext'
+import { ToastContainer } from 'react-toastify';
 
 function App() {
   console.log('Server hosted at: ' + import.meta.env.VITE_SERVER_URL);
-  const { userState } = useUserContext();
 
   return (
-    <BrowserRouter>
-      <Routes>
-        {!userState.isLoggedIn && <Route path='/login' element={<Login/>} />}
-        
-        <Route path='/' element={<Landing/>}/>
-      </Routes>
-    </BrowserRouter>
+    <>
+      <ToastContainer/>
+      <BrowserRouter>
+        <Routes>
+          <Route path='/' element={<Landing/>}/>
+          <Route path='/login' element={<Login/>} />
+        </Routes>
+      </BrowserRouter>
+    </>
   )
 }
 

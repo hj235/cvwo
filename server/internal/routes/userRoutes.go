@@ -28,18 +28,14 @@ func publicUserRoutes() func(router chi.Router) {
 			})
 		})
 
-		router.Group(func(router chi.Router) {
-			router.Use(middleware.GetCorsMiddleware())
+		router.Post("/signup", func(w http.ResponseWriter, req *http.Request) {
+			response, _ := users.HandleSignup(w, req)
+			json.NewEncoder(w).Encode(response)
+		})
 
-			router.Post("/signup", func(w http.ResponseWriter, req *http.Request) {
-				response, _ := users.HandleSignup(w, req)
-				json.NewEncoder(w).Encode(response)
-			})
-
-			router.Post("/login", func(w http.ResponseWriter, req *http.Request) {
-				response, _ := users.HandleLogin(w, req)
-				json.NewEncoder(w).Encode(response)
-			})
+		router.Post("/login", func(w http.ResponseWriter, req *http.Request) {
+			response, _ := users.HandleLogin(w, req)
+			json.NewEncoder(w).Encode(response)
 		})
 	}
 }
