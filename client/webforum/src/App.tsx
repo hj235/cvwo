@@ -9,6 +9,7 @@ import Login from './pages/Login';
 
 // Dependencies
 import { ToastContainer } from 'react-toastify';
+import SideMenu from './components/SideMenu/SideMenu';
 
 function App() {
   console.log('Server hosted at: ' + import.meta.env.VITE_SERVER_URL);
@@ -17,6 +18,7 @@ function App() {
     <>
       <ToastContainer/>
       <BrowserRouter>
+        <SideMenu/>
         <Routes>
           <Route path='/' element={<Landing/>}/>
           <Route path='/login' element={<Login/>} />

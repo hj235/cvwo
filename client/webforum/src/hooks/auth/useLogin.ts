@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useUserContext } from './useUserContext.tsx';
+import { useUserContext } from './useUserContext.ts';
 import { axiosPrivate } from '../../helpers/axios.ts';
 import { UserState } from '../../context/UserContext.tsx';
 
@@ -22,9 +22,9 @@ export const useLogin = () => {
     await axiosPrivate
       .post('/user/login', data)
       .then((res) => {
-        console.log(res.data);
-        localStorage.setItem('user', JSON.stringify(res.data));
-        userDispatcher({ type: 'LOGIN', payload: (res.data as UserState) });
+        console.log(res.data.payload.data);
+        localStorage.setItem('user', JSON.stringify(res.data.payload.data));
+        userDispatcher({ type: 'LOGIN', payload: (res.data.payload.data as UserState) });
         navigate('/');
       })
       .catch((error) => {

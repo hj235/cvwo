@@ -2,7 +2,7 @@ import { createContext, useReducer, useEffect } from "react";
 import PropTypes from "prop-types";
 
 export interface UserState {
-  name: string,
+  username: string,
   date: string,
   isLoggedIn: boolean,
 }
@@ -17,7 +17,7 @@ type CounterAction =
 | { type: "LOGOUT" }
 
 const initialUserState = Object.freeze({
-  name: "",
+  username: "",
   date: "",
   isLoggedIn: false,
 })
@@ -27,8 +27,10 @@ export const UserContext = createContext<UserContextType | null>(null);
 export function userReducer(state: UserState, action: CounterAction): UserState {
   switch (action.type) {
     case "LOGIN":
+      console.log(`Logged in as user: ${action.payload.username}`)
       return { ...action.payload, isLoggedIn: true };
     case "LOGOUT":
+      console.log(`Logged out`)
       return initialUserState;
     default:
       return state;

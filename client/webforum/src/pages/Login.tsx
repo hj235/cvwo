@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Avatar, Button, CssBaseline, TextField, Paper, Box, Grid, Typography, Link } from "@mui/material"
 import { toast } from "react-toastify";
-import { useLogin } from "../hooks/auth/useLogin.jsx";
+import { useLogin } from "../hooks/auth/useLogin.ts";
 import LockIcon from "@mui/icons-material/Lock";
-import { useLoggedInRedirect } from "../hooks/auth/useLoggedInRedirect.js";
+import { useLoggedInRedirect } from "../hooks/auth/useLoggedInRedirect.ts";
 // import { useRandomColorGradient } from "../hooks/auth/useRandomColorGradient.jsx";
 
 const Login = () => {
@@ -70,7 +70,7 @@ const Login = () => {
               alignItems: "center",
             }}
           >
-            <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+            <Avatar sx={{ m: 1, bgcolor: "primary.main" }}>
               <LockIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
