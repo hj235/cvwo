@@ -37,6 +37,7 @@ func protectedTagRoutes() func(router chi.Router) {
 	return func(router chi.Router) {
 		// router.Use(middleware.Verifier)
 		// router.Use(middleware.Authenticator)
+		router.Use(middleware.CorsMiddleware)
 
 		router.Post("/create", func(w http.ResponseWriter, req *http.Request) {
 			response, _ := users.HandleLogin(w, req)
