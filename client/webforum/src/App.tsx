@@ -1,9 +1,11 @@
 import { Routes, Route, BrowserRouter } from 'react-router-dom'
+import { Box } from '@mui/material';
 import './App.css'
 
 // Pages
 import Landing from './pages/Landing'
 import Login from './pages/Login';
+import NewLogin from './pages/NewLogin';
 
 // Components
 
@@ -18,11 +20,15 @@ function App() {
     <>
       <ToastContainer/>
       <BrowserRouter>
-        <SideMenu/>
-        <Routes>
-          <Route path='/' element={<Landing/>}/>
-          <Route path='/login' element={<Login/>} />
-        </Routes>
+        <Box sx={{ display: 'flex', flex: "auto", flexGrow: 1, height: "100vh", alignItems: "center", justifyContent: "center" }}>
+          <SideMenu/>
+
+          <Routes>
+            <Route path='/' element={<Landing/>}/>
+            <Route path='/login' element={<Login/>} />
+            <Route path='/newlogin' element={<NewLogin/>} />
+          </Routes>
+        </Box>
       </BrowserRouter>
     </>
   )

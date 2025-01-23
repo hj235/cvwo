@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import { useLogin } from "../hooks/auth/useLogin.ts";
 import LockIcon from "@mui/icons-material/Lock";
 import { useLoggedInRedirect } from "../hooks/auth/useLoggedInRedirect.ts";
+import GradientBackground from "../components/GradientBackground/GradientBackground.tsx";
 // import { useRandomColorGradient } from "../hooks/auth/useRandomColorGradient.jsx";
 
 const Login = () => {
@@ -42,24 +43,9 @@ const Login = () => {
 
   return (
     <>
-      <Grid container component="main" sx={{ height: "100vh" }}>
+      <Grid container component="main" sx={{ width: "100vw", height: "100vh" }}>
         <CssBaseline />
-        <Grid
-          item
-          xs={false}
-          sm={4}
-          md={7}
-          sx={{
-            // backgroundImage: `linear-gradient(${direction}, #61F4DE, ${color})`,
-            backgroundRepeat: "no-repeat",
-            backgroundColor: (t) =>
-              t.palette.mode === "light"
-                ? t.palette.grey[50]
-                : t.palette.grey[900],
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
-        />
+        <GradientBackground/>
         <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
           <Box
             sx={{
