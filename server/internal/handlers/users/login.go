@@ -17,13 +17,6 @@ const (
 )
 
 func HandleLogin(w http.ResponseWriter, r *http.Request) (*api.Response, error) {
-	// REPLACE WITH DATABASE PING CHECK
-	// db, err := database.GetDB()
-
-	// if err != nil {
-	// 	return nil, errors.Wrap(err, fmt.Sprintf(ErrRetrieveDatabase, Signup))
-	// }
-
 	var response = api.Response{}
 	user := models.User{}
 	err := json.NewDecoder(r.Body).Decode(&user)
