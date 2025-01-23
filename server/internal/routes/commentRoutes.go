@@ -32,7 +32,7 @@ func protectedCommentRoutes() func(router chi.Router) {
 	return func(router chi.Router) {
 		// router.Use(middleware.Verifier)
 		// router.Use(middleware.Authenticator)
-		router.Use(middleware.CorsMiddleware)
+		router.Use(middleware.GetCorsMiddleware())
 
 		router.Post("/create/{username}", func(w http.ResponseWriter, req *http.Request) {
 			response, _ := comments.HandleCreate(w, req)

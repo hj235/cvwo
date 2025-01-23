@@ -8,14 +8,23 @@ import (
 )
 
 func Setup() chi.Router {
+	auth.InitAuth()
 	router := chi.NewRouter()
 	setUpMiddleware(router)
 	setUpRoutes(router)
-	auth.InitAuth()
 	return router
 }
 
 func setUpRoutes(router chi.Router) {
+	// router.Use(cors.Handler(cors.Options{
+	// 	AllowedOrigins:   []string{"http://localhost:5173"},
+	// 	AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+	// 	AllowedHeaders:   []string{"Accept", "Authorization", "Content-Type", "X-CSRF-Token"},
+	// 	ExposedHeaders:   []string{"Link"},
+	// 	AllowCredentials: true,
+	// 	MaxAge:           300,
+	// }))
+	// router.Use(middleware.GetCorsMiddleware())
 	router.Group(routes.GetRoutes())
 	router.Route("/user", routes.GetUserRoutes())
 	router.Route("/thread", routes.GetThreadRoutes())
