@@ -1,5 +1,5 @@
 import { Stack, Box, Typography } from "@mui/material"
-import StringAvatar from "./StringAvatar"
+import StringAvatar from "../StringAvatar"
 import { UserState } from "../../context/UserContext";
 import LogoutButton from "./LogoutButton";
 

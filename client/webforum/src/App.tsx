@@ -6,6 +6,7 @@ import './App.css'
 import Landing from './pages/Landing'
 import Login from './pages/Login';
 import Signup from './pages/Signup';
+import Threads from './pages/ThreadsNew';
 
 // Components
 
@@ -27,6 +28,7 @@ function App() {
             <Route path='/' element={<Landing/>}/>
             <Route path='/login' element={<Login/>} />
             <Route path='/signup' element={<Signup/>} />
+            <Route path='/thread' element={<Threads/>} />
           </Routes>
         </Box>
       </BrowserRouter>

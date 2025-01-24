@@ -8,7 +8,7 @@ import Typography from '@mui/material/Typography';
 // Local components
 import MenuContent from './MenuContent';
 import LogoutButton from './LogoutButton';
-import StringAvatar from './StringAvatar';
+import StringAvatar from '../StringAvatar';
 // Hooks
 import { useUserContext } from '../../hooks/auth/useUserContext';
 
