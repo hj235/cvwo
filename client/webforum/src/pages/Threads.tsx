@@ -14,17 +14,20 @@ import {
   Stack,
 } from "@mui/material";
 import ThreadCard from "../components/SideMenu/ThreadCard";
+import ThreadModal from "../components/ThreadModal";
+import { Thread, initialThread } from "../context/ThreadsContext";
 
 import useGetThreads from "../hooks/threads/useGetThreads";
 import { useThreadsContext } from "../hooks/threads/useThreadsContext";
-import { Thread } from "../context/ThreadsContext";
 
 const Threads = () => {
     const { threadsState } = useThreadsContext();
-    const [filteredThreads, setFilteredThreads] = useState(threadsState.threads);
-    const [searchQuery, setSearchQuery] = useState("");
+    const [filteredThreads, setFilteredThreads] = useState<Thread[]>(threadsState.threads);
+    const [searchQuery, setSearchQuery] = useState<string>("");
     //   const [selectedTags, setSelectedTags] = useState([]);
     const [sortBy, setSortBy] = useState("recent");
+    const [selectedThread, setSelectedThread] = useState<Thread>(initialThread);
+    const [openModal, setOpenModal] = useState<boolean>(false);
     useGetThreads();
 
     useEffect(() => {
@@ -167,7 +170,10 @@ const Threads = () => {
               key={thread.id}
               sx={{ display: "flex" }}
             >
-              <ThreadCard thread={thread} />
+              <ThreadCard thread={thread} select={() => {
+                setSelectedThread(thread);
+                setOpenModal(true);
+              }} />
             </Grid>
           ))
         ) : (
@@ -178,6 +184,7 @@ const Threads = () => {
           </Grid>
         )}
       </Grid>
+      <ThreadModal thread={selectedThread} open={openModal} onClose={() => {setOpenModal(false)}} />
     </Container>
   );
 };

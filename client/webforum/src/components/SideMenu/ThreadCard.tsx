@@ -6,6 +6,7 @@ import { format } from 'date-fns';
 
 type ThreadCardProps = {
     thread: Thread,
+    select: React.MouseEventHandler<HTMLDivElement>,
 }
 
 const StyledCard = styled(Card)(({ theme }) => ({
@@ -20,9 +21,9 @@ const StyledCard = styled(Card)(({ theme }) => ({
     },
 }));
 
-const ThreadCard: React.FC<ThreadCardProps> = ({ thread }: ThreadCardProps) => {
+const ThreadCard: React.FC<ThreadCardProps> = ({ thread, select }: ThreadCardProps) => {
     return (
-        <StyledCard>
+        <StyledCard onClick={select} >
             <CardHeader
                 avatar={<StringAvatar name={thread.author.String} />}
                 title={thread.author.String}

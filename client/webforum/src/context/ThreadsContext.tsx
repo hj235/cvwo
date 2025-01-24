@@ -7,8 +7,17 @@ export interface Thread {
     title: string,
     body: string,
     time_created: string,
-    time_edited: string,
+    time_edited: { String: string, Valid: boolean },
 }
+
+export const initialThread: Thread = {
+    id: '',
+    author: { String: '', Valid: false },
+    title: '',
+    body: '',
+    time_created: '',
+    time_edited: { String: '', Valid: false },
+};
 
 export interface ThreadsState {
   threads: Thread[],

@@ -6,7 +6,7 @@ import './App.css'
 import Landing from './pages/Landing'
 import Login from './pages/Login';
 import Signup from './pages/Signup';
-import Threads from './pages/ThreadsNew';
+import Threads from './pages/Threads';
 
 // Components
 

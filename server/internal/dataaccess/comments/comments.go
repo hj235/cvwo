@@ -9,7 +9,7 @@ import (
 func GetComments(id int) ([]models.Comment, error) {
 	db := database.GetDB()
 
-	query := "SELECT * FROM comments WHERE thread_id=?"
+	query := "SELECT * FROM comments WHERE thread_id=? ORDER BY time_created DESC"
 	rows, err := db.Query(query, id)
 	if err != nil {
 		return nil, errors.Wrap(err, "unable to retrieve comments")

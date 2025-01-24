@@ -8,13 +8,16 @@ import App from './App.tsx'
 // Context providers
 import { UserContextProvider } from './context/UserContext.tsx'
 import { ThreadContextProvider } from './context/ThreadsContext.tsx';
+import { CommentContextProvider } from './context/CommentsContext.tsx';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <ThemeProvider theme={theme}>
       <UserContextProvider>
         <ThreadContextProvider>
-          <App />
+          <CommentContextProvider>
+            <App />
+          </CommentContextProvider>
         </ThreadContextProvider>
       </UserContextProvider>
     </ThemeProvider>

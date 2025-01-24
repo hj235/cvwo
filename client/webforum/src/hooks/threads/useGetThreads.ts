@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-import { axiosPrivate } from '../../helpers/axios.js';
+import { axiosPublic } from '../../helpers/axios.js';
 import { useThreadsContext } from './useThreadsContext.js';
 
 const useGetThreads = () => {
@@ -9,7 +9,7 @@ const useGetThreads = () => {
 
     useEffect(() => {
         const getThreads = async () => {
-        await axiosPrivate
+        await axiosPublic
             .get('/thread')
             .then((res) => {
             console.log(res.data.payload.data);
