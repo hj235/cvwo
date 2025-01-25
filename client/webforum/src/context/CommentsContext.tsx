@@ -61,8 +61,11 @@ export function commentReducer(state: CommentsState, action: CounterAction): Com
             }), isLoaded: true };
         case "DELETE":
             console.log(`Comment deleted.`);
-            return { comments: state.comments.filter((comment) => {
+            console.log("UNFILTERED: ", state.comments, "FILTERED: ", state.comments.filter((comment) => {
                 comment.id != action.payload
+            }))
+            return { comments: state.comments.filter((comment) => {
+                return comment.id != action.payload;
             }), isLoaded: true };
         default:
         return state;

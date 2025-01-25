@@ -66,7 +66,7 @@ export function threadReducer(state: ThreadsState, action: CounterAction): Threa
         case "DELETE":
             console.log(`Thread deleted.`);
             return { threads: state.threads.filter((thread) => {
-                thread.id != action.payload
+                return thread.id != action.payload;
             }), isLoaded: true };
         default:
         return state;

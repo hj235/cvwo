@@ -1,12 +1,11 @@
 import React, { useState, useMemo } from 'react';
-import { Box, TextField, Button, Typography, List, ListItem, ListItemAvatar, ListItemText, CircularProgress, Container } from '@mui/material';
-import { format } from "date-fns";
+import { Box, TextField, Button, Typography, List, CircularProgress, Container } from '@mui/material';
 import { useCommentsContext } from '../hooks/threads/useCommentsContext';
 import useGetComments from '../hooks/threads/useGetComment';
 import { initialComment } from '../context/CommentsContext';
-import StringAvatar from './StringAvatar';
 import useCreateComment from '../hooks/threads/useCreateComment';
 import { toast } from 'react-toastify';
+import CommentCard from "./CommentCard";
 
 type CommentSectionProps = {
     threadId: string,
@@ -24,36 +23,9 @@ export default function CommentSection({ threadId }: CommentSectionProps) {
     <List>
       {commentsState.comments?.map((comment) => {
 
-        return (
-        <ListItem
-          key={comment.id}
-          alignItems="flex-start"
-          sx={{ borderBottom: 1, borderColor: "divider" }}
-        >
-          <ListItemAvatar>
-            <StringAvatar name={comment.author.String} />
-          </ListItemAvatar>
-          <ListItemText
-            primary={
-              <Box display="flex" justifyContent="space-between" alignItems="center">
-                <Typography variant="subtitle1" component="span">
-                  {comment.author.String}
-                </Typography>
-                <Typography variant="caption" color="text.secondary">
-                  {comment.time_edited.Valid
-                    ?`edited :${format(new Date(comment.time_edited.String), "MMM dd, yyyy")}`
-                    : format(new Date(comment.time_created), "MMM dd, yyyy")}
-                </Typography>
-              </Box>
-            }
-            secondary={
-                <Typography variant="body1" color="text.primary">
-                  {comment.body}
-                </Typography>
-            }
-          />
-        </ListItem>
-      )})}
+        return comment ? (
+          <CommentCard comment={comment} />
+      ) : <></>})}
     </List>
   ), [commentsState]);
 
@@ -95,8 +67,10 @@ export default function CommentSection({ threadId }: CommentSectionProps) {
             </Button>
           </Container>
         </Box>
-        <Typography>{`${commentsState.comments.length} Comments`}</Typography>
-        {commentsList}
+        {commentsState.comments && <>
+          <Typography>{`${commentsState.comments.length} Comments`}</Typography>
+          {commentsList}
+        </>}
     </>
   );
 }

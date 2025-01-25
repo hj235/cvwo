@@ -4,7 +4,7 @@ type StringAvatarProps = {
   name: string
 };
 
-function stringToColor(string: string) {
+export function stringToColor(string: string) {
   let hash = 0;
   let i;
 
@@ -16,7 +16,7 @@ function stringToColor(string: string) {
   let color = '#';
 
   for (i = 0; i < 3; i += 1) {
-    const value = (hash >> (i * 8)) & 0xff;
+    const value = ((hash >> (i * 8)) & 0xaf) | 0x60;
     color += `00${value.toString(16)}`.slice(-2);
   }
   /* eslint-enable no-bitwise */

@@ -20,7 +20,10 @@ export default function WebForumRoutes() {
     const { loading } = useLogin();
 
     useEffect(() => {
-        if ((location.pathname == '/create') && 
+        if ((
+            location.pathname == '/create' ||
+            location.pathname == '/home'
+        ) && 
             !userState.isLoggedIn &&
             !loading
         ) {

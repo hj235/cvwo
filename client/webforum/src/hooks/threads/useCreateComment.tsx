@@ -4,6 +4,7 @@ import { axiosPrivate } from '../../helpers/axios.js';
 import { Comment } from '../../context/CommentsContext.js';
 import { useUserContext } from '../auth/useUserContext.js';
 import { useCommentsContext } from './useCommentsContext.js';
+import useGetComments from './useGetComment.js';
 
 const useCreateComment = () => {
     const [error, setError] = useState<string>('');
@@ -37,8 +38,9 @@ const useCreateComment = () => {
                 const message = error.response?.data ? `, ${error.response.data.msg}` : 'error adding comment';
                 setError(error.message + message);
             });
-
+        
         setLoading(false);
+        useGetComments(comment.thread_id);
     };
 
     return { createComment, error, loading };

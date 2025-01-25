@@ -51,7 +51,7 @@ func protectedUserRoutes() func(router chi.Router) {
 			json.NewEncoder(w).Encode(response)
 		})
 
-		router.Delete("/delete", func(w http.ResponseWriter, req *http.Request) {
+		router.Patch("/delete", func(w http.ResponseWriter, req *http.Request) {
 			response, _ := users.HandleDelete(w, req)
 			json.NewEncoder(w).Encode(response)
 		})
