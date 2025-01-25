@@ -1,6 +1,7 @@
 package comments
 
 import (
+	"database/sql"
 	"encoding/json"
 	"fmt"
 	"net/http"
@@ -43,6 +44,10 @@ func HandleCreate(w http.ResponseWriter, r *http.Request) (*api.Response, error)
 		fmt.Println(wrappedError)
 		w.WriteHeader(400)
 		return &response, wrappedError
+	}
+	comment.Author = sql.NullString{
+		String: username,
+		Valid:  true,
 	}
 
 	// Encode Data

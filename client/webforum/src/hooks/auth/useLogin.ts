@@ -29,8 +29,8 @@ export const useLogin = () => {
       .catch((error) => {
         console.log(error);
         userDispatcher({ type: 'LOGOUT' });
-        const message = error.response?.data ? `, ${error.response.data.msg}` : 'error loading user';
-        setError(error.message + message);
+        const message = error.response?.data ? `, ${error.response.data.msg}` : 'Invalid username or password';
+        setError(message);
       });
 
     setLoading(false);

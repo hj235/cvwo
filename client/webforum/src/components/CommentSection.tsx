@@ -1,11 +1,12 @@
 import React, { useState, useMemo } from 'react';
-import { Box, TextField, Button, Typography, List, ListItem, ListItemAvatar, ListItemText, IconButton, CircularProgress } from '@mui/material';
+import { Box, TextField, Button, Typography, List, ListItem, ListItemAvatar, ListItemText, IconButton, CircularProgress, Container } from '@mui/material';
 import { format } from "date-fns";
 import { useCommentsContext } from '../hooks/threads/useCommentsContext';
 import useGetComments from '../hooks/threads/useGetComment';
 import { initialComment } from '../context/CommentsContext';
 import StringAvatar from './StringAvatar';
 import useCreateComment from '../hooks/threads/useCreateComment';
+import { toast } from 'react-toastify';
 
 type CommentSectionProps = {
     threadId: string,
@@ -13,13 +14,18 @@ type CommentSectionProps = {
 
 export default function CommentSection({ threadId }: CommentSectionProps) {
   const [newComment, setNewComment] = useState("");
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const { commentsState } = useCommentsContext();
+  const { createComment, error, loading } = useCreateComment();
   useGetComments(threadId);
+
+  const notifyError = (err: string) => toast.error(err);
 
   const commentsList = useMemo(() => (
     <List>
-      {commentsState.comments?.map((comment) => (
+      {commentsState.comments?.map((comment) => {
+        // console.log("created", comment.time_created, "edited", comment.time_edited)
+
+        return (
         <ListItem
           key={comment.id}
           alignItems="flex-start"
@@ -36,81 +42,70 @@ export default function CommentSection({ threadId }: CommentSectionProps) {
                 </Typography>
                 <Typography variant="caption" color="text.secondary">
                   {comment.time_edited.Valid
-                    ?`edited :${format(new Date(comment.time_edited.String), "PPp")}`
-                    : format(new Date(comment.time_created), "PPp")}
+                    ?`edited :${format(new Date(comment.time_edited.String), "MMM dd, yyyy")}`
+                    : format(new Date(comment.time_created), "MMM dd, yyyy")}
                 </Typography>
               </Box>
             }
             secondary={
-              <Box mt={1}>
                 <Typography variant="body1" color="text.primary">
                   {comment.body}
                 </Typography>
-                {/* <IconButton
-                  size="small"
-                  onClick={() => toggleLike(comment.id)}
-                  aria-label={likedComments.has(comment.id) ? "Unlike" : "Like"}
-                >
-                  {likedComments.has(comment.id) ? <FaHeart color="#f44336" /> : <FaRegHeart />}
-                </IconButton> */}
-              </Box>
+                // {/* <IconButton
+                //   size="small"
+                //   onClick={() => toggleLike(comment.id)}
+                //   aria-label={likedComments.has(comment.id) ? "Unlike" : "Like"}
+                // >
+                //   {likedComments.has(comment.id) ? <FaHeart color="#f44336" /> : <FaRegHeart />}
+                // </IconButton> */}
             }
           />
         </ListItem>
-      ))}
+      )})}
     </List>
   //   ), [comments, likedComments, toggleLike]);
-  ), [commentsState.comments]);
+  ), [commentsState]);
 
   const handleComment = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    // const inputErrors = {
-    // username: username ? '' : "Username cannot be empty",
-    // password: password ? '' : "Password cannot be empty"
-    // };
-    // setFormError(inputErrors);
-
-    // if (inputErrors.username || inputErrors.password) {
-    // return;
-    // }
-
-    // await login(username, password);
-    setIsSubmitting(true);
-    useCreateComment({ ...initialComment, thread_id: threadId, body: newComment })
+    createComment({ ...initialComment, thread_id: threadId, body: newComment });
+    if (error) {
+      notifyError(error)
+    } else {
+      setNewComment('');
+    };
   };
   
   return (
     <>
       <Box>
         <Typography variant="h6" gutterBottom>
-            Comments
+            Comment Section
         </Typography>
-        <Box sx={{ mt: 3 }}>
-          <TextField
-              fullWidth
-              multiline
-              rows={3}
-              value={newComment}
-              onChange={(e) => setNewComment(e.target.value)}
-              placeholder="Add a comment..."
-              variant="outlined"
-              disabled={isSubmitting}
-              inputProps={{ maxLength: 1000 }}
-              helperText={`${newComment.length}/1000 characters`}
-          />
-          <Box sx={{ mt: 1, display: "flex", justifyContent: "flex-end" }}>
+          <Container sx={{ mt: 1, display: "flex", flexDirection: "row" }} >
+            <TextField
+                fullWidth
+                value={newComment}
+                onChange={(e) => setNewComment(e.target.value)}
+                placeholder="Add a comment..."
+                variant="outlined"
+                disabled={loading}
+                inputProps={{ maxLength: 1000 }}
+                helperText={`${newComment.length}/1000 characters`}
+            />
             <Button
               variant="contained"
               onClick={handleComment}
-              disabled={!newComment.trim() || isSubmitting}
-              startIcon={isSubmitting && <CircularProgress size={20} />}
+              disabled={!newComment.trim() || loading}
+              startIcon={loading && <CircularProgress size={20} />}
+              sx={{ height: 57, ml: 1 }}
               >
-              {isSubmitting ? "Submitting..." : "Submit"}
+              {loading ? "Submitting..." : "Submit"}
             </Button>
-          </Box>
-          {commentsList}
+          </Container>
         </Box>
-      </Box>
+        <Typography>{`${commentsState.comments.length} Comments`}</Typography>
+        {commentsList}
     </>
   );
 }

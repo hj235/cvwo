@@ -17,7 +17,7 @@ const publicItems = [
 
 const privateItems = [
     { text: 'Home', icon: <HomeIcon />, path: '/' },
-    { text: 'Create New Thread', icon: <DrawIcon />, path: '/thread/create' },
+    { text: 'Create New Thread', icon: <DrawIcon />, path: '/create' },
 ];
 
 export default function MenuContent() {

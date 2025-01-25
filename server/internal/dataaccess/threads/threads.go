@@ -1,6 +1,8 @@
 package threads
 
 import (
+	"fmt"
+
 	"github.com/hj235/cvwo/internal/database"
 	"github.com/hj235/cvwo/internal/models"
 	"github.com/pkg/errors"
@@ -19,9 +21,10 @@ func GetThreads() ([]models.Thread, error) {
 	var threads []models.Thread
 	for rows.Next() {
 		thread := models.Thread{}
-		if err := rows.Scan(&thread.Id, &thread.Author, &thread.Title, &thread.Body, &thread.Created, &thread.Edited); err != nil {
+		if err := rows.Scan(&thread.Id, &thread.Author, &thread.Title, &thread.Body, &thread.Created, &thread.Edited, &thread.Tags); err != nil {
 			return nil, errors.Wrap(err, "unable to scan threads")
 		}
+		fmt.Println("TESTING: " + thread.Author.String)
 		threads = append(threads, thread)
 	}
 
@@ -35,7 +38,7 @@ func GetThread(id int) (*models.Thread, error) {
 	row := db.QueryRow(query, id)
 
 	var thread models.Thread
-	err := row.Scan(&thread.Id, &thread.Author, &thread.Title, &thread.Body, &thread.Created, &thread.Edited)
+	err := row.Scan(&thread.Id, &thread.Author, &thread.Title, &thread.Body, &thread.Created, &thread.Edited, &thread.Tags)
 	if err != nil {
 		return nil, errors.Wrap(err, "unable to retrieve thread")
 	}

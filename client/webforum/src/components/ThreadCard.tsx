@@ -1,7 +1,7 @@
 import { Card, CardHeader, Typography, CardContent, Stack, Chip, Box } from '@mui/material';
 import { styled } from '@mui/system';
-import { Thread } from '../../context/ThreadsContext';
-import StringAvatar from '../StringAvatar';
+import { Thread } from '../context/ThreadsContext';
+import StringAvatar from './StringAvatar';
 import { format } from 'date-fns';
 
 type ThreadCardProps = {
@@ -11,6 +11,7 @@ type ThreadCardProps = {
 
 const StyledCard = styled(Card)(({ theme }) => ({
     height: "100%",
+    width: "100%",
     display: "flex",
     flexDirection: "column",
     transition: "all 0.3s ease-in-out",

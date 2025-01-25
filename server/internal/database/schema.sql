@@ -20,7 +20,8 @@ threads (
   title VARCHAR(255) NOT NULL,
   body TEXT,
   time_created TIMESTAMP NOT NULL,
-  time_edited TIMESTAMP
+  time_edited TIMESTAMP,
+  tags TEXT
 );
 
 CREATE TABLE IF NOT EXISTS

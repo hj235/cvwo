@@ -23,6 +23,7 @@ func HandleList(w http.ResponseWriter, r *http.Request) (*api.Response, error) {
 
 	// Retrieve URL params
 	idParam := chi.URLParam(r, "id")
+	fmt.Println("TEST: " + idParam)
 	id, err := strconv.Atoi(idParam)
 	if err != nil {
 		errorMessage := fmt.Sprintf(msgsPkg.ErrParseURLParams, ListComments)

@@ -1,5 +1,9 @@
-import { createContext, useReducer, useEffect } from "react";
+import { createContext, useReducer } from "react";
 import PropTypes from "prop-types";
+
+export interface Tag {
+  body: string,
+}
 
 export interface Thread {
     id: string,
@@ -8,6 +12,7 @@ export interface Thread {
     body: string,
     time_created: string,
     time_edited: { String: string, Valid: boolean },
+    tags: Tag[],
 }
 
 export const initialThread: Thread = {
@@ -17,6 +22,7 @@ export const initialThread: Thread = {
     body: '',
     time_created: '',
     time_edited: { String: '', Valid: false },
+    tags: [],
 };
 
 export interface ThreadsState {
@@ -34,7 +40,7 @@ type CounterAction =
 | { type: "UPDATE"; payload: Thread }
 | { type: "DELETE"; payload: string }
 
-const initialThreadsState = Object.freeze({
+const initialThreadsState: ThreadsState = Object.freeze({
     threads: [],
     isLoaded: false,
 })

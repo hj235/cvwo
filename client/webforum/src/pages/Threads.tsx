@@ -13,7 +13,7 @@ import {
   OutlinedInput,
   Stack,
 } from "@mui/material";
-import ThreadCard from "../components/SideMenu/ThreadCard";
+import ThreadCard from "../components/ThreadCard";
 import ThreadModal from "../components/ThreadModal";
 import { Thread, initialThread } from "../context/ThreadsContext";
 
@@ -31,7 +31,7 @@ const Threads = () => {
     useGetThreads();
 
     useEffect(() => {
-        setFilteredThreads(threadsState.threads.filter((thread) => {
+        setFilteredThreads(threadsState.threads?.filter((thread) => {
             const matchesSearch = thread.title.toLowerCase().includes(searchQuery.toLowerCase());
             // const matchesTags = selectedTags.length === 0 ||
             //     selectedTags.every((tag) => thread.tags.includes(tag));
@@ -54,7 +54,6 @@ const Threads = () => {
         }
         
         return 0;
-    // return b.commentsCount - a.commentsCount;
     }
 
 //   useEffect(() => {
@@ -108,8 +107,8 @@ const Threads = () => {
 //   const allTags = [...new Set(threads.flatMap((thread) => thread.tags))];
 
   return (
-    <Container maxWidth="lg" sx={{ py: 4 }}>
-      <Typography variant="h3" component="h1" gutterBottom>
+    <Container maxWidth="lg" sx={{ alignItems: "center", justifyContent: "center", flex: 1, flexGrow: 1, height: "100%"}}>
+      <Typography variant="h3" component="h1" gutterBottom sx={{ py: "2vh"}} >
         Community Discussions
       </Typography>
 
@@ -130,7 +129,7 @@ const Threads = () => {
               input={<OutlinedInput label="Sort By" />}
             >
               <MenuItem value="recent">Most Recent</MenuItem>
-              <MenuItem value="comments">Most Commented</MenuItem>
+              {/* <MenuItem value="comments">Most Commented</MenuItem> */}
             </Select>
           </FormControl>
 
@@ -160,7 +159,7 @@ const Threads = () => {
       </Stack>
 
       <Grid container spacing={3}>
-        {filteredThreads.length > 0 ? (
+        {filteredThreads?.length > 0 ? (
           filteredThreads.map((thread) => (
             <Grid
               item

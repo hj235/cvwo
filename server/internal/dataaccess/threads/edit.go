@@ -23,6 +23,10 @@ func Edit(threadId int, thread *models.Thread) (*models.Thread, error) {
 		keys = append(keys, models.ThreadBodyKey)
 		values = append(values, thread.Body)
 	}
+	if len(thread.Tags) > 0 {
+		keys = append(keys, models.ThreadTagsKey)
+		values = append(values, thread.Tags)
+	}
 	if len(keys) == 0 {
 		return nil, fmt.Errorf("no fields were changed")
 	}

@@ -11,6 +11,7 @@ const (
 	ThreadBodyKey    = "body"
 	ThreadCreatedKey = "time_created"
 	ThreadEditedKey  = "time_edited"
+	ThreadTagsKey    = "tags"
 )
 
 type Thread struct {
@@ -20,4 +21,5 @@ type Thread struct {
 	Body    string         `json:"body"`
 	Created string         `json:"time_created"`
 	Edited  sql.NullString `json:"time_edited"`
+	Tags    string         `json:"tags"`
 }

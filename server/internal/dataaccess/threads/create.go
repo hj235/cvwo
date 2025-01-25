@@ -23,8 +23,8 @@ func Create(author string, thread *models.Thread) error {
 	db := database.GetDB()
 
 	// Add to database
-	query := "INSERT INTO threads (author, title, body, time_created) VALUES(?, ?, ?, ?)"
-	if _, err := db.Exec(query, author, thread.Title, thread.Body, thread.Created); err != nil {
+	query := "INSERT INTO threads (author, title, body, time_created, tags) VALUES(?, ?, ?, ?, ?)"
+	if _, err := db.Exec(query, author, thread.Title, thread.Body, thread.Created, thread.Tags); err != nil {
 		return errors.Wrap(err, "error adding thread")
 	}
 
