@@ -2,11 +2,11 @@ import { useEffect } from 'react';
 import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
 
 // Pages
-import Landing from './pages/Landing'
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Threads from './pages/Threads';
 import CreateThread from './pages/CreateThread';
+import Home from './pages/Home';
 
 // Dependencies
 import { useUserContext } from './hooks/auth/useUserContext';
@@ -33,17 +33,17 @@ export default function WebForumRoutes() {
             userState.isLoggedIn &&
             !loading
         ) {
-          navigate('/');
+          navigate('/home');
           toast("Already logged in!");
         }
       }, [location, userState, loading]);
   
     return (
         <Routes>
-            <Route path='/' element={<Landing/>}/>
+            <Route path='/' element={<Threads/>}/>
             <Route path='/login' element={<Login/>} />
             <Route path='/signup' element={<Signup/>} />
-            <Route path='/thread' element={<Threads/>} />
+            <Route path='/home' element={<Home/>} />
             <Route path='/create' element={<CreateThread/>} />
         </Routes>
     );

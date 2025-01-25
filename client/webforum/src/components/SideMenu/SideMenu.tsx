@@ -25,10 +25,11 @@ const Drawer = styled(MuiDrawer)(() => ({
   },
 }));
 
+// SideMenu to display user status and clickable links for ease of navigation
 export default function SideMenu() {
   const { userState } = useUserContext();
-  const isSmallScreen = useMediaQuery((theme) => theme.breakpoints.down('md')); // Check for small screens
-  const [mobileOpen, setMobileOpen] = useState(false); // State for drawer visibility
+  const isSmallScreen = useMediaQuery((theme) => theme.breakpoints.down('md'));
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -84,16 +85,16 @@ export default function SideMenu() {
             backgroundColor: mobileOpen ? "#f0f4ff" : "transparent",
             position: 'fixed',
             top: 16,
-            left: mobileOpen ? `${drawerWidth + 16}px` : 16, // Dynamically adjust based on drawer state
-            transition: 'left 0.3s ease', // Smooth transition
-            zIndex: 1301, // Keep above the drawer
+            left: mobileOpen ? `${drawerWidth + 16}px` : 16,
+            transition: 'left 0.3s ease',
+            zIndex: 1301,
           }}
         >
           {mobileOpen ? <CloseIcon /> : <MenuIcon />}
         </IconButton>
       )}
       <Drawer
-        variant={isSmallScreen ? 'temporary' : 'permanent'} // Responsive drawer variant
+        variant={isSmallScreen ? 'temporary' : 'permanent'}
         open={isSmallScreen ? mobileOpen : true}
         onClose={handleDrawerToggle}
         sx={{
@@ -103,7 +104,7 @@ export default function SideMenu() {
           },
         }}
         ModalProps={{
-          keepMounted: true, // Improves performance on mobile
+          keepMounted: true,
         }}
       >
         {drawerContent}

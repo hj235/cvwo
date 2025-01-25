@@ -10,30 +10,28 @@ import {
   InputLabel,
   OutlinedInput,
   Stack,
+  Divider,
 } from "@mui/material";
 import ThreadModal from "../components/ThreadModal";
-import { Thread, initialThread } from "../context/ThreadsContext";
 import ThreadList from "../components/ThreadList";
-import { tagsContain } from "../helpers/tags"; 
+import { Thread, initialThread } from "../context/ThreadsContext";
 import useGetThreads from "../hooks/threads/useGetThreads";
 import { useThreadsContext } from "../hooks/threads/useThreadsContext";
+import { useUserContext } from "../hooks/auth/useUserContext";
 
-export default function Threads() {
+export default function Home() {
     const { threadsState } = useThreadsContext();
     const [filteredThreads, setFilteredThreads] = useState<Thread[]>(threadsState.threads);
     const [searchQuery, setSearchQuery] = useState<string>("");
     const [sortBy, setSortBy] = useState("recent");
     const [selectedThread, setSelectedThread] = useState<Thread>(initialThread);
     const [openModal, setOpenModal] = useState<boolean>(false);
+    const { userState } = useUserContext();
     useGetThreads();
 
     useEffect(() => {
         setFilteredThreads(threadsState.threads?.filter((thread) => {
-            const matchesTitle = thread.title.toLowerCase().includes(searchQuery.toLowerCase());
-            const matchesBody = thread.body.toLowerCase().includes(searchQuery.toLowerCase());
-            const matchesTags = tagsContain(thread.tags, searchQuery);
-
-            return matchesTitle || matchesBody || matchesTags;
+            return thread.author.String == userState.username;
         })
         .sort(dateComparator as CompareFn));
     }, [searchQuery, threadsState]);
@@ -56,33 +54,38 @@ export default function Threads() {
 
   return (
     <Container maxWidth="lg" sx={{ alignItems: "center", justifyContent: "center", flex: 1, flexGrow: 1, height: "100%"}}>
-      <Typography variant="h3" component="h1" gutterBottom sx={{ py: "2vh"}} >
-        Community Discussions
+      <Typography variant="h2" component="h1" gutterBottom sx={{ py: "2vh"}} >
+        Homepage
       </Typography>
 
-      <Stack spacing={3} mb={4}>
-        <TextField
-          fullWidth
-          placeholder="Search threads by title, tags, or content"
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-        />
+      <Box>
+        <Stack spacing={3} mb={4}>
+          <Divider/>
+          <Typography variant="h4">My Threads</Typography>
+          <TextField
+            fullWidth
+            placeholder="Search threads by title, tags, or content"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
 
-        <Box sx={{ display: "flex", gap: 2 }}>
-          <FormControl sx={{ minWidth: 200 }}>
-            <InputLabel>Sort By</InputLabel>
-            <Select
-              value={sortBy}
-              onChange={(e) => setSortBy(e.target.value)}
-              input={<OutlinedInput label="Sort By" />}
-            >
-              <MenuItem value="recent">Most Recent</MenuItem>
-            </Select>
-          </FormControl>
-        </Box>
-      </Stack>
-      <ThreadList filteredThreads={filteredThreads} setSelectedThread={setSelectedThread} setOpenModal={setOpenModal} />
-      <ThreadModal thread={selectedThread} open={openModal} onClose={() => {setOpenModal(false)}} />
+          <Box sx={{ display: "flex", gap: 2 }}>
+            <FormControl sx={{ minWidth: 200 }}>
+              <InputLabel>Sort By</InputLabel>
+              <Select
+                value={sortBy}
+                onChange={(e) => setSortBy(e.target.value)}
+                input={<OutlinedInput label="Sort By" />}
+              >
+                <MenuItem value="recent">Most Recent</MenuItem>
+              </Select>
+            </FormControl>
+          </Box>
+        </Stack>
+
+        <ThreadList filteredThreads={filteredThreads} setSelectedThread={setSelectedThread} setOpenModal={setOpenModal} />
+        <ThreadModal thread={selectedThread} open={openModal} onClose={() => {setOpenModal(false)}} />
+      </Box>
     </Container>
   );
 };

@@ -12,14 +12,15 @@ import DrawIcon from '@mui/icons-material/Draw';
 import { useUserContext } from '../../hooks/auth/useUserContext'
 
 const publicItems = [
-    { text: 'Threads', icon: <GestureIcon />, path: '/thread' },
+    { text: 'Threads', icon: <GestureIcon />, path: '/' },
 ];
 
 const privateItems = [
-    { text: 'Home', icon: <HomeIcon />, path: '/' },
+    { text: 'Home', icon: <HomeIcon />, path: '/home' },
     { text: 'Create New Thread', icon: <DrawIcon />, path: '/create' },
 ];
 
+// Component for the clickable links in the sidemenu
 export default function MenuContent() {
     const location = useLocation();
     const { userState } = useUserContext();

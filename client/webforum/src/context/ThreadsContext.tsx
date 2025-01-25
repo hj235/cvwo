@@ -13,6 +13,7 @@ export interface Thread {
     time_created: string,
     time_edited: { String: string, Valid: boolean },
     tags: Tag[],
+    tagsAsString: string,
 }
 
 export const initialThread: Thread = {
@@ -23,6 +24,7 @@ export const initialThread: Thread = {
     time_created: '',
     time_edited: { String: '', Valid: false },
     tags: [],
+    tagsAsString: '',
 };
 
 export interface ThreadsState {

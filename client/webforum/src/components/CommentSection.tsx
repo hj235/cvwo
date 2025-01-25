@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { Box, TextField, Button, Typography, List, ListItem, ListItemAvatar, ListItemText, IconButton, CircularProgress, Container } from '@mui/material';
+import { Box, TextField, Button, Typography, List, ListItem, ListItemAvatar, ListItemText, CircularProgress, Container } from '@mui/material';
 import { format } from "date-fns";
 import { useCommentsContext } from '../hooks/threads/useCommentsContext';
 import useGetComments from '../hooks/threads/useGetComment';
@@ -23,7 +23,6 @@ export default function CommentSection({ threadId }: CommentSectionProps) {
   const commentsList = useMemo(() => (
     <List>
       {commentsState.comments?.map((comment) => {
-        // console.log("created", comment.time_created, "edited", comment.time_edited)
 
         return (
         <ListItem
@@ -51,19 +50,11 @@ export default function CommentSection({ threadId }: CommentSectionProps) {
                 <Typography variant="body1" color="text.primary">
                   {comment.body}
                 </Typography>
-                // {/* <IconButton
-                //   size="small"
-                //   onClick={() => toggleLike(comment.id)}
-                //   aria-label={likedComments.has(comment.id) ? "Unlike" : "Like"}
-                // >
-                //   {likedComments.has(comment.id) ? <FaHeart color="#f44336" /> : <FaRegHeart />}
-                // </IconButton> */}
             }
           />
         </ListItem>
       )})}
     </List>
-  //   ), [comments, likedComments, toggleLike]);
   ), [commentsState]);
 
   const handleComment = (event: React.MouseEvent<HTMLButtonElement>) => {

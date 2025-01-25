@@ -42,3 +42,12 @@ export function stringifyTags(tags: Tag[]): string {
     });
     return tagsAsStr.join(" ");
 }
+
+export function tagsContain(tags: Tag[], text: string): boolean {
+    for (const tag in tags) {
+        if (tag.toLowerCase().includes(text.toLowerCase())) {
+            return true;
+        }
+    }
+    return false;
+}

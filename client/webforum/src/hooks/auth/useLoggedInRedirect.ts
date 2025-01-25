@@ -6,6 +6,6 @@ export const useLoggedInRedirect = () => {
     const { userState } = useUserContext();
     const navigate = useNavigate();
     useEffect(() => {
-        if (userState.isLoggedIn) navigate("/")
+        if (userState.isLoggedIn) navigate("/home")
     }, [userState])
 }

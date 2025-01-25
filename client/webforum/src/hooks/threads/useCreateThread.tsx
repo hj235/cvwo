@@ -32,7 +32,7 @@ const useCreateThread = () => {
                 .then((res) => {
                     console.log(res.data.payload.data);
                     toast.success('Thread successfully created');
-                    navigate("/");
+                    navigate("/home");
                 })
                 .catch((error) => {
                     console.log(error);

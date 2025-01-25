@@ -10,15 +10,15 @@ const useGetThreads = () => {
     useEffect(() => {
         const getThreads = async () => {
         await axiosPublic
-            .get('/thread')
-            .then((res) => {
-            console.log(res.data.payload.data);
-            threadsDispatcher({ type: 'GET', payload: res.data.payload.data });
+              .get('/thread')
+              .then((res) => {
+              console.log(res.data.payload.data);
+              threadsDispatcher({ type: 'GET', payload: res.data.payload.data });
             })
-            .catch((error) => {
-            console.log(error);
-            const message = error.response?.data ? `, ${error.response.data.msg}` : 'error retrieving threads';
-            setError(error.message + message);
+              .catch((error) => {
+              console.log(error);
+              const message = error.response?.data ? `, ${error.response.data.msg}` : 'error retrieving threads';
+              setError(error.message + message);
             });
         };
 

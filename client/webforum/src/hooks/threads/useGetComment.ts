@@ -1,12 +1,10 @@
 import { useState, useEffect } from 'react';
 
 import { axiosPublic } from '../../helpers/axios.js';
-import { Comment, initialComment } from '../../context/CommentsContext.js';
 import { useCommentsContext } from './useCommentsContext.js';
 
 const useGetComments = (threadId: string) => {
     const [error, setError] = useState<string>('');
-    const [comments, setComments] = useState<Comment>(initialComment);
     const { commentsDispatcher } = useCommentsContext();
 
         useEffect(() => {

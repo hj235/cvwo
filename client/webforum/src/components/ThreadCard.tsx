@@ -3,6 +3,7 @@ import { styled } from '@mui/system';
 import { Thread } from '../context/ThreadsContext';
 import StringAvatar from './StringAvatar';
 import { format } from 'date-fns';
+import { parseTags } from '../helpers/tags';
 
 type ThreadCardProps = {
     thread: Thread,
@@ -39,17 +40,15 @@ const ThreadCard: React.FC<ThreadCardProps> = ({ thread, select }: ThreadCardPro
                     ? `${thread.body.substring(0, 150)}...`
                     : thread.body}
                 </Typography>
-                <Stack direction="row" spacing={1} flexWrap="wrap" mb={2}>
-                {/* {thread.tags.map((tag) => (
+                {parseTags(thread.tags).map((tag) => (
                     <Chip
-                    key={tag}
-                    label={tag}
+                    key={tag.body}
+                    label={tag.body}
                     size="small"
                     onClick={() => {}}
                     sx={{ margin: 0.5 }}
                     />
-                ))} */}
-                </Stack>
+                ))}
                 {/* <Box
                 sx={{
                     display: "flex",
