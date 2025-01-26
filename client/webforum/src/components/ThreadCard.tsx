@@ -54,7 +54,7 @@ const ThreadCard: React.FC<ThreadCardProps> = ({ thread, select }: ThreadCardPro
                     ? `${thread.body.substring(0, 150)}...`
                     : thread.body}
                 </Typography>
-                {parseTags(thread.tags).map((tag) => (
+                {parseTags(thread.tags.toString()).map((tag) => (
                     <Chip
                     key={tag.body}
                     label={tag.body}

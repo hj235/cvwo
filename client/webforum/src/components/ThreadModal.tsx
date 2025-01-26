@@ -104,7 +104,7 @@ const ThreadModal = ({
             </Typography>
             <Divider/>
           </MetadataContainer>
-          {thread.tags.length > 0 && parseTags(thread.tags).map((tag) => (
+          {thread.tags.length > 0 && parseTags(thread.tags.toString()).map((tag) => (
                 <Chip
                 key={tag.body}
                 label={tag.body}
