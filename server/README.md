@@ -6,7 +6,12 @@ However, do note that this is **far from a model example**.
 After all, we want to see how you maximise your learning in web development
 and good software development practices.
 
-## Getting Started
+### Try out the deployed application at:
+https://client-xer9.onrender.com/
+
+Disclaimer: The app might take a while to start up.
+
+## Getting Started with local testing
 
 ### Installing Go
 
