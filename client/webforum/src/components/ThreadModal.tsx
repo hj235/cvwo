@@ -15,7 +15,6 @@ import { useCommentsContext } from "../hooks/threads/useCommentsContext";
 import { useUserContext } from "../hooks/auth/useUserContext";
 import useDeleteThread from "../hooks/threads/useDeleteThread";
 import StringAvatar from "./StringAvatar";
-import { parseTags } from "../helpers/tags";
 import DeleteButton from "./DeleteButton";
 import CloseButton from "./CloseButton";
 
@@ -25,7 +24,7 @@ type ThreadModalProps = {
   thread: Thread,
 };
 
-const StyledModal = styled(Modal)(({ theme }) => ({
+const StyledModal = styled(Modal)(() => ({
   display: "flex",
   alignItems: "center",
   justifyContent: "center"
@@ -104,7 +103,7 @@ const ThreadModal = ({
             </Typography>
             <Divider/>
           </MetadataContainer>
-          {thread.tags.length > 0 && parseTags(thread.tags).map((tag) => (
+          {thread.tags.length > 0 && thread.tags.map((tag) => (
                 <Chip
                 key={tag.body}
                 label={tag.body}
