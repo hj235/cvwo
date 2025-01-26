@@ -3,7 +3,6 @@ import { styled } from '@mui/system';
 import { Thread } from '../context/ThreadsContext';
 import StringAvatar from './StringAvatar';
 import { format } from 'date-fns';
-import { parseTags } from '../helpers/tags';
 import useDeleteThread from '../hooks/threads/useDeleteThread';
 import DeleteButton from './DeleteButton';
 import { useUserContext } from '../hooks/auth/useUserContext';
@@ -14,7 +13,7 @@ type ThreadCardProps = {
     select: React.MouseEventHandler<HTMLDivElement>,
 }
 
-const StyledCard = styled(Card)(({ theme }) => ({
+const StyledCard = styled(Card)(() => ({
     height: "100%",
     width: "100%",
     display: "flex",
@@ -54,7 +53,7 @@ const ThreadCard: React.FC<ThreadCardProps> = ({ thread, select }: ThreadCardPro
                     ? `${thread.body.substring(0, 150)}...`
                     : thread.body}
                 </Typography>
-                {parseTags(thread.tags).map((tag) => (
+                {thread.tags.map((tag) => (
                     <Chip
                     key={tag.body}
                     label={tag.body}
