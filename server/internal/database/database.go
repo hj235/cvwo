@@ -25,14 +25,14 @@ func InitialiseDB() {
 	DBInstance = db
 	log.Println("Opened MySql driver")
 	fmt.Println("Connected to: " + dsn)
-	// Ping()
+	Ping()
 	log.Println("Connection to database established")
 }
 
 func Ping() {
 	err := DBInstance.Ping()
 	if err != nil {
-		log.Fatalln("An error has occurred establishing connection to the database")
+		log.Println("An error has occurred establishing connection to the database")
 	}
 }
 
