@@ -31,6 +31,7 @@ export function userReducer(state: UserState, action: CounterAction): UserState 
       console.log(`Logged in as user: ${action.payload.username}`)
       return { ...action.payload, isLoggedIn: true };
     case "LOGOUT":
+      localStorage.removeItem('user');
       console.log(`User is logged out`)
       return initialUserState;
     default:

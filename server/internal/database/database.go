@@ -13,7 +13,10 @@ var DBInstance *sql.DB
 
 func InitialiseDB() {
 	// Verify DSN
-	dsn := os.Getenv("MYSQL_DSN")
+	rootPw := os.Getenv("MYSQL_ROOT_PASSWORD")
+	port := os.Getenv("MYSQL_PORT")
+	database := os.Getenv("MYSQL_DATABASE")
+	dsn := fmt.Sprintf("root:%v@tcp(mysql-db:%v)/%v", rootPw, port, database)
 	db, err := sql.Open("mysql", dsn)
 	if err != nil {
 		fmt.Println("An error has occurred with the data source name.\nOpening a driver will typically not attempt to connect to the database.")
@@ -21,8 +24,8 @@ func InitialiseDB() {
 	}
 	DBInstance = db
 	log.Println("Opened MySql driver")
-
-	Ping()
+	fmt.Println("Connected to: " + dsn)
+	// Ping()
 	log.Println("Connection to database established")
 }
 

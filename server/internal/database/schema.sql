@@ -3,6 +3,9 @@ DROP TABLE IF EXISTS threads CASCADE;
 DROP TABLE IF EXISTS comments CASCADE;
 DROP TABLE IF EXISTS tags CASCADE;
 
+CREATE DATABASE IF NOT EXISTS webforum;
+USE webforum;
+
 CREATE TABLE IF NOT EXISTS
 users (
   username VARCHAR(255) PRIMARY KEY,
@@ -33,7 +36,7 @@ comments (
       ON DELETE SET NULL,
     thread_id INT
       NOT NULL
-      REFERENCES threads (thread_id)
+      REFERENCES threads (id)
       ON UPDATE CASCADE
       ON DELETE CASCADE,
     body TEXT NOT NULL,
@@ -45,7 +48,7 @@ CREATE TABLE IF NOT EXISTS
 tags (
     thread_id INT
       NOT NULL
-      REFERENCES threads (thread_id)
+      REFERENCES threads (id)
       ON UPDATE CASCADE
       ON DELETE CASCADE,
     body VARCHAR(45) NOT NULL,
